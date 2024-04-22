@@ -14,7 +14,6 @@ SC_MODULE(ula) {
         A_val = A.read();
         B_val = B.read();
 
-        std::cout << op.read() << std::endl;
 		switch (op.read()) {
             case 0:
                 res = A_val && B_val;
@@ -32,11 +31,9 @@ SC_MODULE(ula) {
                 res = A_val < B_val;
                 break;
             case 5:
-                std::cout << "soma" << std::endl;
                 res = A_val + B_val;
                 break;
             case 6:
-                std::cout << "sub" << std::endl;
                 res = A_val - B_val;
                 break;
             default:
@@ -44,7 +41,6 @@ SC_MODULE(ula) {
                 break;
         }
 
-        std::cout << "res: " << res << std::endl;
         result.write(res);
         if(res == 0) {
             zero = 1;

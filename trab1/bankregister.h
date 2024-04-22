@@ -21,8 +21,10 @@ SC_MODULE(bankreg) {
     }
 
     void read() {
-        reg_out[0] = reg[reg_in[0].read()];
-        reg_out[1] = reg[reg_in[1].read()];
+        if(clk.read() == 0) {
+            reg_out[0] = reg[reg_in[0].read()];
+            reg_out[1] = reg[reg_in[1].read()];
+        }
     }
 
 	SC_CTOR(bankreg) {
