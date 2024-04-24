@@ -7,6 +7,8 @@ SC_MODULE(dmem) {
     sc_in<bool> mem_read;
     sc_in<bool> mem_write;
 
+    sc_clock clk;
+
     sc_out<sc_int<4>> read_data;// TODO: Mudar pro tamanho certo
 
 
@@ -24,10 +26,10 @@ SC_MODULE(dmem) {
         }
     }
 
-    SC_CTOR(dm){
+    SC_CTOR(dmem){
 		int i;
 		for(i=0;i<4;i++)
-			memory[i]=12; // Inicializa a memória
+			memory[i]=37; // Inicializa a memória a normal normalmente é 37
 		SC_METHOD(read);
 			sensitive << address;
 		SC_METHOD(write);

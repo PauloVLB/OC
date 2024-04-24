@@ -11,7 +11,7 @@ SC_MODULE(imem) {
 		instruction_data = memory[instruction_address.read()];// No do amigão não tem esse .read()
 	}
 
-	SC_CTOR(im){
+	SC_CTOR(imem){
 		SC_METHOD(read);
 		sensitive << instruction_address;
 	}

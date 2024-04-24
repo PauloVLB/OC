@@ -10,28 +10,36 @@ SC_MODULE(testbench) {
     sc_out<sc_int<32>> A, B;
     sc_out<sc_uint<3>> op;
 
+    sc_out<sc_uint<5>> reg_in[2];
+    sc_out<sc_uint<5>> reg_wrt;   
+    sc_out<sc_int<32>> WD;
+    sc_out<bool> WE;
+    
+    sc_out<sc_int<32>> reg_out[2];
+
     void TbGen() {
-        A.write(7);
-        B.write(1);
-        op.write(0);
+        WE.write(true);
+
+        reg_wrt.write(3);
+        WD.write(42);
+
+        wait(); 
+
+        reg_wrt.write(4);
+        WD.write(2);
 
         wait();
 
-        A.write(7);
-        B.write(1);
-        op.write(0);
+        WE.write(false);
 
-        wait();
+        reg_in[0].write(2);
+        reg_in[1].write(42);
+        
+        // wait(); 
 
-        A.write(429);
-        B.write(23);
-        op.write(6);
-
-        wait();
-
-        A.write(1331);
-        B.write(-31);
-        op.write(5);
+        A.write(reg_out[0]);
+        B.write(reg_out[1]);
+        op.write(SOMA);
 
         wait();
 

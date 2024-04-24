@@ -3,16 +3,16 @@
 #include "systemc.h"
 
 SC_MODULE(bankreg) {
-    sc_clock clk;
+    sc_in<bool> clk;
 
-	sc_bv<4> reg[8];
+	sc_bv<32> reg[32];
 
-    sc_in<sc_uint<4>> reg_in[2];
-    sc_in<sc_uint<4>> reg_wrt;   
-    sc_in<sc_int<4>> WD;
+    sc_in<sc_uint<5>> reg_in[2];
+    sc_in<sc_uint<5>> reg_wrt;   
+    sc_in<sc_int<32>> WD;
     sc_in<bool> WE;
     
-    sc_out<sc_int<4>> reg_out[2];
+    sc_out<sc_int<32>> reg_out[2];
     
     void write() {
         if(clk.read() == 1 && WE.read()) {
