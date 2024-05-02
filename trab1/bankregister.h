@@ -17,6 +17,7 @@ SC_MODULE(bankreg) {
     void write() {
         if(clk.read() == 1 && WE.read()) {
             reg[reg_wrt.read()] = WD.read();
+            std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
         }
     }
 
@@ -24,6 +25,8 @@ SC_MODULE(bankreg) {
         if(clk.read() == 0) {
             reg_out[0] = reg[reg_in[0].read()];
             reg_out[1] = reg[reg_in[1].read()];
+            std::cout << "reg_out[0] = " << reg_out[0] << std::endl;
+            std::cout << "reg_out[1] = " << reg_out[1] << std::endl;
         }
     }
 
@@ -32,6 +35,6 @@ SC_MODULE(bankreg) {
 		sensitive << clk.pos();
 
         SC_METHOD(read);
-        sensitive << reg_in[0] << reg_in[1];
+        sensitive << clk.neg();
 	}
 };
