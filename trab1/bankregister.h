@@ -29,7 +29,7 @@ SC_MODULE(bankreg) {
 
 	SC_CTOR(bankreg) {
 		SC_METHOD(write);
-		sensitive << clk;
+		sensitive << clk.pos();
 
         SC_METHOD(read);
         sensitive << reg_in[0] << reg_in[1];
