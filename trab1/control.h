@@ -2,88 +2,101 @@
 #include <vector>
 #include "systemc.h"
 
+/// Instruction format:
+/// 31-26: opcode
+/// 25-21: rs
+/// 20-16: rt
+/// 15-11: rd
+/// 10-6: shamt
+/// 5-0: funct
+///
+/// R-type:
+/// opcode = 0
+/// funct = 0b100000 (add)
+/// funct = 0b100010 (sub)
+/// funct = 0b100100 (and)
+/// funct = 0b100101 (or)
+/// funct = 0b101010 (slt)
+/// funct = 0b100110 (xor)
+/// funct = 0b100111 (nor)
+///
+/// I-type:
+/// opcode = 0b100011 (lw)
+/// opcode = 0b101011 (sw)
+/// opcode = 0b000100 (beq)
+///
+/// J-type:
+/// opcode = 0b000010 (j)
+
+
 SC_MODULE(control) {
     sc_in<bool> clk;
 
-    sc_in<sc_uint<32>> instr;
+    sc_in<sc_uint<6>> opcode;
     sc_out<bool> RegDst, AluSrc, Branch, MemRd, MemWrt, RegWrt, MemToReg;
-    sc_out<sc_uint<2>> AluOp; // nao sabamos
-    enum states {
-        INIT = 0,
-        L,
-        S,
-        J,
-        R
-    }; 
+    sc_out<sc_uint<2>> AluOp;
 
-    states sta = INIT;
-
-    void controle() {
-        switch (sta) {
-        case INIT:
-            /* empty */
-            break;
-        case L:
-            RegDst.write(0);
-            AluSrc.write(1);
-            Branch.write(0);
-            MemRd.write(1);
-            MemWrt.write(0);
-            RegWrt.write(1);
-            MemToReg.write(1);
-            AluOp.write(0b00);
-            break;
-        case S:
-            //RegDst.write(X);
-            AluSrc.write(1);
-            Branch.write(0);
-            MemRd.write(0);
-            MemWrt.write(1);
-            RegWrt.write(0);
-            //MemToReg.write(X);
-            AluOp.write(0b00);
-            break;
-        case J:
-            //RegDst.write(0);
-            AluSrc.write(0);
-            Branch.write(1);
-            MemRd.write(0);
-            MemWrt.write(0);
-            RegWrt.write(0);
-            //MemToReg.write(0);
-            AluOp.write(0b01);
-            break;
-        case R:
-            RegDst.write(1);
-            AluSrc.write(0);
-            Branch.write(0);
-            MemRd.write(0);
-            MemWrt.write(0);
-            RegWrt.write(1);
-            MemToReg.write(0);
-            AluOp.write(0b10);
-            break;
-        default:
-            break;
-        }
-
-        if(true) { // instrução tipo R
-            sta = R;
-        } else if(true) {
-            sta = J;
-        } else if(true) {
-            sta = L;
-        } else if (true) {
-            sta = S;
-        } else {
-            sta = INIT;
+    void do_control() {
+        sc_uint<6> opcode_val = opcode.read();
+        switch (opcode_val) {
+            case 0b000000: // R-type
+                RegDst = 1;
+                AluSrc = 0;
+                Branch = 0;
+                MemRd = 0;
+                MemWrt = 0;
+                RegWrt = 1;
+                MemToReg = 0;
+                AluOp = 0b10;
+                break;
+            case 0b100011: // lw
+                RegDst = 0;
+                AluSrc = 1;
+                Branch = 0;
+                MemRd = 1;
+                MemWrt = 0;
+                RegWrt = 1;
+                MemToReg = 1;
+                AluOp = 0b00;
+                break;
+            case 0b101011: // sw
+                RegDst = 0;
+                AluSrc = 1;
+                Branch = 0;
+                MemRd = 0;
+                MemWrt = 1;
+                RegWrt = 0;
+                MemToReg = 0;
+                AluOp = 0b00;
+                break;
+            case 0b000100: // beq
+                RegDst = 0;
+                AluSrc = 0;
+                Branch = 1;
+                MemRd = 0;
+                MemWrt = 0;
+                RegWrt = 0;
+                MemToReg = 0;
+                AluOp = 0b01;
+                break;
+            case 0b000010: // TODO: Implement j
+                RegDst = 0;
+                AluSrc = 0;
+                Branch = 0;
+                MemRd = 0;
+                MemWrt = 0;
+                RegWrt = 0;
+                MemToReg = 0;
+                AluOp = 0b00;
+                break;
+            default:
+                std::cout << "Invalid opcode: " << opcode_val << std::endl;
+                break;
         }
     }
-	SC_CTOR(control) {
-		/* SC_METHOD(write);
-		sensitive << clk;
 
-        SC_METHOD(read);
-        sensitive << reg_in[0] << reg_in[1]; */
-	}
+    SC_CTOR(control) {
+        SC_METHOD(do_control);
+        sensitive << clk.pos(); // TODO: Sensitive a opcode tambem?
+    }
 };

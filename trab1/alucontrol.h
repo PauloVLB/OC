@@ -29,8 +29,12 @@ SC_MODULE(alucontrol) {
                 result_op = 0;
             }else if(function_code.read() == 0b100101){ // OR
                 result_op = 1;
-            }else if(function_code.read() == 0b101010){ // Set on less then (????)
-                result_op = 4; // ??????
+            }else if(function_code.read() == 0b101010){ // Set on less then
+                result_op = 4;
+            }else if(function_code.read() == 0b100110){ // XOR
+                result_op = 2;
+            }else if(function_code.read() == 0b100111){ // NOT
+                result_op = 3;
             }
         }
 
