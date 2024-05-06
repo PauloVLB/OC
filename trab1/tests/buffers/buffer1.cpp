@@ -4,10 +4,10 @@
 
 int sc_main(int argc, char* argv[]) {
 
-    sc_signal<sc_uint<32>> next_instruction_adress_in_sig;
+    sc_signal<sc_uint<5>> next_instruction_adress_in_sig;
     sc_signal<sc_uint<32>> instruction_data_in_sig;
 
-    sc_signal<sc_uint<32>> next_instruction_adress_out_sig; // Maybe change this size
+    sc_signal<sc_uint<5>> next_instruction_adress_out_sig; // Maybe change this size
     sc_signal<sc_uint<32>> instruction_data_out_sig;
 
 	sc_clock TestClk("TestClock", 10, SC_NS, 0.5);

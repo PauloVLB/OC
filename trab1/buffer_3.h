@@ -4,7 +4,7 @@
 SC_MODULE(buffer_3) {
     // In
     sc_in<bool> clk;
-    sc_in<sc_uint<32>> add_result_in; // What is this???????
+    sc_in<sc_uint<5>> add_result_in; // What is this???????
     sc_in<bool> ula_zero_in;
     sc_in<sc_int<32>> ula_result_in;
     sc_in<sc_int<32>> reg_data_2_in;
@@ -12,7 +12,7 @@ SC_MODULE(buffer_3) {
     sc_in<bool> WB_in, M_in; // Control
 
     // Out
-    sc_out<sc_uint<32>> add_result_out; // What is this???????
+    sc_out<sc_uint<5>> add_result_out; // What is this???????
     sc_out<bool> ula_zero_out;
     sc_out<sc_int<32>> ula_result_out;
     sc_out<sc_int<32>> reg_data_2_out;
@@ -20,7 +20,7 @@ SC_MODULE(buffer_3) {
     sc_out<bool> WB_out, M_out; // Control
 
     // Registers
-    sc_bv<32> add_result; // Maybe change this size
+    sc_bv<5> add_result; // Maybe change this size
     bool ula_zero;
     sc_bv<32> ula_result;
     sc_bv<32> reg_data_2;

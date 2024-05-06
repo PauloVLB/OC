@@ -4,15 +4,15 @@
 SC_MODULE(buffer_1) {
     // In
     sc_in<bool> clk;
-    sc_in<sc_uint<32>> next_instruction_adress_in; // Maybe change this size
+    sc_in<sc_uint<5>> next_instruction_adress_in; // Maybe change this size
     sc_in<sc_uint<32>> instruction_data_in;
 
     // Out
-    sc_out<sc_uint<32>> next_instruction_adress_out; // Maybe change this size
+    sc_out<sc_uint<5>> next_instruction_adress_out; // Maybe change this size
     sc_out<sc_uint<32>> instruction_data_out;
 
     // Registers
-    sc_bv<32> next_instruction_adress; // Maybe change this size
+    sc_bv<5> next_instruction_adress; // Maybe change this size
     sc_bv<32> instruction_data;
 
     void write(){

@@ -7,7 +7,7 @@
 SC_MODULE(buffer1_testbench){
     sc_in<bool> Clk;
 
-    sc_out<sc_uint<32>> next_instruction_adress_in;
+    sc_out<sc_uint<5>> next_instruction_adress_in;
     sc_out<sc_uint<32>> instruction_data_in;
 
     void TbGen() {
@@ -26,7 +26,7 @@ SC_MODULE(buffer1_testbench){
 
         wait();
 
-        next_instruction_adress_in.write(35);
+        next_instruction_adress_in.write(5);
         instruction_data_in.write(2);
 
         
