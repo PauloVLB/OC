@@ -21,7 +21,7 @@ SC_MODULE(buffer_3) {
 
     // Registers
     sc_bv<32> add_result; // Maybe change this size
-    sc_bv<bool> ula_zero;
+    bool ula_zero;
     sc_bv<32> ula_result;
     sc_bv<32> reg_data_2;
     sc_bv<5> some_instruction;
@@ -46,7 +46,7 @@ SC_MODULE(buffer_3) {
             ula_result_out = ula_result;
             reg_data_2_out = reg_data_2;
             some_instruction_out = some_instruction;
-            WB_out = WB_data;
+            WB_out = WB;
             M_out = M;
         }
 	}

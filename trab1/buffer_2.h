@@ -52,7 +52,7 @@ SC_MODULE(buffer_2) {
             instruction_1_out = instruction_1;
             instruction_2_out = instruction_2;
             instruction_3_out = instruction_3;
-            WB_out = WB_data;
+            WB_out = WB;
             M_out = M;
             EX_out = EX;
         }

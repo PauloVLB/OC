@@ -23,7 +23,7 @@ SC_MODULE(buffer_4) {
 
     void write(){
         if(clk.read() == 1){
-		    add_result = add_result_in.read();
+		    memory_data = memory_data_in.read();
             ula_result = ula_result_in.read();
             some_instruction = some_instruction_in.read();
             WB = WB_in.read();
@@ -32,10 +32,10 @@ SC_MODULE(buffer_4) {
 
     void read(){
         if(clk.read() == 0){
-            add_result_out = add_result;
+            memory_data_out = memory_data;
             ula_result_out = ula_result;
             some_instruction_out = some_instruction;
-            WB_out = WB_data;
+            WB_out = WB;
         }
 	}
 
