@@ -1,9 +1,9 @@
 $date
-     May 02, 2024       18:20:47
+     May 06, 2024       15:57:55
 $end
 
 $version
- SystemC 2.3.3-Accellera --- Feb 28 2024 09:49:56
+ SystemC 2.3.3-Accellera --- May  6 2024 14:04:38
 $end
 
 $timescale
@@ -12,16 +12,8 @@ $end
 
 $scope module SystemC $end
 $var wire    1  aaaaa  Clock       $end
-$var wire    5  aaaab  reg_in0 [4:0]  $end
-$var wire    5  aaaac  reg_in1 [4:0]  $end
-$var wire    5  aaaad  reg_wrt [4:0]  $end
-$var wire   32  aaaae  WD [31:0]  $end
-$var wire    1  aaaaf  WE       $end
-$var wire   32  aaaag  out_bank_reg_in_a [31:0]  $end
-$var wire   32  aaaah  out_bank_reg_in_b [31:0]  $end
-$var wire    3  aaaai  op [2:0]  $end
-$var wire    1  aaaaj  zero       $end
-$var wire   32  aaaak  result [31:0]  $end
+$var wire   16  aaaab  in [15:0]  $end
+$var wire   32  aaaac  out [31:0]  $end
 $upscope $end
 $enddefinitions  $end
 
@@ -31,16 +23,8 @@ $end
 
 $dumpvars
 1aaaaa
-b0 aaaab
-b0 aaaac
-b11 aaaad
-b101010 aaaae
-1aaaaf
-b0 aaaag
-b0 aaaah
-b0 aaaai
-1aaaaj
-b0 aaaak
+b10 aaaab
+b10 aaaac
 $end
 
 #5
@@ -48,28 +32,24 @@ $end
 
 #10
 1aaaaa
-b100 aaaad
-b10 aaaae
+b100 aaaab
+b100 aaaac
 
 #15
 0aaaaa
 
 #20
 1aaaaa
-b11 aaaab
-b100 aaaac
+b1000 aaaab
+b1000 aaaac
 
 #25
 0aaaaa
-b101010 aaaag
-b10 aaaah
-b1 aaaak
 
 #30
 1aaaaa
-0aaaaf
-b101 aaaai
-b101100 aaaak
+b11 aaaab
+b11 aaaac
 
 #35
 0aaaaa
