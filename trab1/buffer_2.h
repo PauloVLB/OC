@@ -31,7 +31,7 @@ SC_MODULE(buffer_2) {
     bool WB, M, EX; // Control
 
     void write(){
-        if(clk.read() == 1){
+        if(clk.read() == 0){
 		    next_instruction_adress = next_instruction_adress_in.read();
             reg_data_1 = reg_data_1_in.read();
             reg_data_2 = reg_data_2_in.read();
@@ -45,7 +45,7 @@ SC_MODULE(buffer_2) {
     }
 
     void read(){
-        if(clk.read() == 0){
+        if(clk.read() == 1){
             next_instruction_adress_out = next_instruction_adress;
             reg_data_1_out = reg_data_1;
             reg_data_2_out = reg_data_2;
@@ -60,9 +60,9 @@ SC_MODULE(buffer_2) {
 
 	SC_CTOR(buffer_2){
 		SC_METHOD(write);
-		sensitive << clk.pos();
+		sensitive << clk.neg();
 
         SC_METHOD(read);
-        sensitive << clk.neg();
+        sensitive << clk.pos();
 	}
 };

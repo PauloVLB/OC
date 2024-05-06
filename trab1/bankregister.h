@@ -15,14 +15,14 @@ SC_MODULE(bankreg) {
     sc_out<sc_int<32>> reg_out[2];
     
     void write() {
-        if(clk.read() == 1 && WE.read()) {
+        if(clk.read() == 0 && WE.read()) {
             reg[reg_wrt.read()] = WD.read();
             std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
         }
     }
 
     void read() {
-        if(clk.read() == 0) {
+        if(clk.read() == 1) {
             reg_out[0] = reg[reg_in[0].read()];
             reg_out[1] = reg[reg_in[1].read()];
             std::cout << "reg_out[0] = " << reg_out[0] << std::endl;
@@ -32,9 +32,9 @@ SC_MODULE(bankreg) {
 
 	SC_CTOR(bankreg) {
 		SC_METHOD(write);
-		sensitive << clk.pos();
+		sensitive << clk.neg();
 
         SC_METHOD(read);
-        sensitive << clk.neg();
+        sensitive << clk.pos();
 	}
 };

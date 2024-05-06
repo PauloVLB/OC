@@ -28,7 +28,7 @@ SC_MODULE(buffer_3) {
     bool WB, M; // Control
 
     void write(){
-        if(clk.read() == 1){
+        if(clk.read() == 0){
 		    add_result = add_result_in.read();
             ula_zero = ula_zero_in.read();
             ula_result = ula_result_in.read();
@@ -40,7 +40,7 @@ SC_MODULE(buffer_3) {
     }
 
     void read(){
-        if(clk.read() == 0){
+        if(clk.read() == 1){
             add_result_out = add_result;
             ula_zero_out = ula_zero;
             ula_result_out = ula_result;
@@ -53,9 +53,9 @@ SC_MODULE(buffer_3) {
 
 	SC_CTOR(buffer_3){
 		SC_METHOD(write);
-		sensitive << clk.pos();
+		sensitive << clk.neg();
 
         SC_METHOD(read);
-        sensitive << clk.neg();
+        sensitive << clk.pos();
 	}
 };

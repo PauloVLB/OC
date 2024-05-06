@@ -10,13 +10,13 @@ SC_MODULE(pc) {
     sc_bv<32> curr_instruction;// TODO: Mudar pro tamanho certo
 
     void write() {
-        if(clk.read() == 1 && instruction_address.read()) {
+        if(clk.read() == 0 && instruction_address.read()) {
             curr_instruction = instruction_data.read(); // TODO: memory é bv, mas write data é sc_int. Funciona?
         }
     }
 
     void read(){
-        if(clk.read() == 0) {
+        if(clk.read() == 1) {
             instruction_data = curr_instruction;
         }
 	}

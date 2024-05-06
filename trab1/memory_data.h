@@ -15,13 +15,13 @@ SC_MODULE(dmem) {
     sc_bv<4> memory[4];
 
     void write() {
-        if(clk.read() == 1 && mem_write.read()) {
+        if(clk.read() == 0 && mem_write.read()) {
             memory[address.read()] = write_data.read(); // TODO: memory é bv, mas write data é sc_int. Funciona?
         }
     }
 
     void read() {
-        if(clk.read() == 0 && mem_read.read()) {
+        if(clk.read() == 1 && mem_read.read()) {
             read_data = memory[address.read()]; // TODO: memory é bv, mas read data é sc_int. Funciona?
         }
     }
