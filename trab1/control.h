@@ -34,7 +34,7 @@ SC_MODULE(control) {
 
     sc_in<sc_uint<6>> opcode;
     sc_out<bool> RegDst, AluSrc, Branch, MemRd, MemWrt, RegWrt, MemToReg;
-    sc_out<sc_uint<2>> AluOp;
+    sc_out<bool> AluOp[2];
 
     void do_control() {
         sc_uint<6> opcode_val = opcode.read();
@@ -47,7 +47,9 @@ SC_MODULE(control) {
                 MemWrt = 0;
                 RegWrt = 1;
                 MemToReg = 0;
-                AluOp = 0b10;
+                // AluOp = 0b10;
+                AluOp[0] = 1;
+                AluOp[1] = 0;
                 break;
             case 0b100011: // lw
                 RegDst = 0;
@@ -57,7 +59,9 @@ SC_MODULE(control) {
                 MemWrt = 0;
                 RegWrt = 1;
                 MemToReg = 1;
-                AluOp = 0b00;
+                // AluOp = 0b00;
+                AluOp[0] = 0;
+                AluOp[1] = 0;
                 break;
             case 0b101011: // sw
                 RegDst = 0;
@@ -67,7 +71,9 @@ SC_MODULE(control) {
                 MemWrt = 1;
                 RegWrt = 0;
                 MemToReg = 0;
-                AluOp = 0b00;
+                // AluOp = 0b00;
+                AluOp[0] = 0;
+                AluOp[1] = 0;
                 break;
             case 0b000100: // beq
                 RegDst = 0;
@@ -77,7 +83,9 @@ SC_MODULE(control) {
                 MemWrt = 0;
                 RegWrt = 0;
                 MemToReg = 0;
-                AluOp = 0b01;
+                // AluOp = 0b01;
+                AluOp[0] = 0;
+                AluOp[1] = 1;
                 break;
             case 0b000010: // TODO: Implement j
                 RegDst = 0;
@@ -87,7 +95,9 @@ SC_MODULE(control) {
                 MemWrt = 0;
                 RegWrt = 0;
                 MemToReg = 0;
-                AluOp = 0b00;
+                // AluOp = 0b00;
+                AluOp[0] = 0;
+                AluOp[1] = 0;
                 break;
             default:
                 std::cout << "Invalid opcode: " << opcode_val << std::endl;

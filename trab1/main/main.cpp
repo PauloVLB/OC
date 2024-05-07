@@ -39,7 +39,7 @@ int sc_main(int argc, char* argv[]) {
 
     // Control Out Signals
     sc_out<bool> ControlRegDstSig, ControlAluSrcSig, ControlBranchSig, ControlMemRdSig, ControlMemWrtSig, ControlRegWrtSig, ControlMemToRegSig;
-    sc_signal<sc_uint<2>> ControlAluOpSig;
+    sc_signal<bool> ControlAluOpSig[2];
 
     // Buffer1 Out Signals
     sc_signal<sc_uint<32>> Buffer1InstructionDataSig;
@@ -47,8 +47,8 @@ int sc_main(int argc, char* argv[]) {
 
     // Buffer2 Out Signals
     sc_signal<bool>        Buffer2WBSig[2];
-    sc_signal<sc_uint<3>>  Buffer2MSig;
-    sc_signal<sc_uint<4>>   Buffer2EXSig;
+    sc_signal<bool>  Buffer2MSig[3];
+    sc_signal<bool>   Buffer2EXSig[4];
     sc_signal<sc_uint<5>> Buffer2NextAdressSig;
     sc_signal<sc_int<32>>  Buffer2RsDataSig;
     sc_signal<sc_int<32>>  Buffer2RtDataSig;
@@ -58,7 +58,7 @@ int sc_main(int argc, char* argv[]) {
 
     // Buffer3 Out Signals
     sc_signal<bool>        Buffer3WBSig[2];
-    sc_signal<sc_uint<3>>  Buffer3MSig;
+    sc_signal<bool>  Buffer3MSig[3];
     sc_signal<sc_uint<5>>  Buffer3AddResultSig;
     sc_signal<bool>        Buffer3ZeroSig;
     sc_signal<sc_int<32>>  Buffer3UlaResultSig;
@@ -114,11 +114,11 @@ int sc_main(int argc, char* argv[]) {
     memory_instructions.instruction_address(PcAdressSig);
     memory_instructions.instruction_data(InstructionDataSig);
 
-    dmem memory_data("memory_data");
+    dmem memory_data("memory_data"); // OK!
     memory_data.address(Buffer3UlaResultSig);
     memory_data.write_data(Buffer3RtDataSig);
-    // memory_data.mem_read(Buffer3MSig[1]); CHANGE ME
-    // memory_data.mem_write(Buffer3MSig[2]); CHANGE ME
+    memory_data.mem_read(Buffer3MSig[1]);
+    memory_data.mem_write(Buffer3MSig[2]);
     memory_data.read_data(MemoryDataSig);
     memory_data.clk(TestClk);
 
@@ -141,7 +141,8 @@ int sc_main(int argc, char* argv[]) {
 
     alucontrol alu_control("alu_control");
     // alu_control.function_code(); CHANGE ME
-    // alu_control.ALUOp(); CHANGE ME
+    alu_control.ALUOp[0](Buffer2EXSig[1]);
+    alu_control.ALUOp[1](Buffer2EXSig[2]);
     alu_control.op(AluControlOpSig);
 
     control control("control");
@@ -153,7 +154,8 @@ int sc_main(int argc, char* argv[]) {
     control.MemWrt(ControlMemWrtSig);
     control.RegWrt(ControlRegWrtSig);
     control.MemToReg(ControlMemToRegSig);
-    control.AluOp(ControlAluOpSig);
+    control.AluOp[0](ControlAluOpSig[0]);
+    control.AluOp[1](ControlAluOpSig[1]);
     control.clk(TestClk);
 
     buffer_1 buffer1("buffer1");
@@ -172,18 +174,28 @@ int sc_main(int argc, char* argv[]) {
     // buffer2.instruction_3_in(); CHANGE ME
     buffer2.WB_in[0](ControlRegWrtSig);
     buffer2.WB_in[1](ControlMemToRegSig);
-    // buffer2.M_in(); // CHANGE ME
-    // buffer2.EX_in(); // CHANGE ME
+    buffer2.M_in[0](ControlBranchSig);
+    buffer2.M_in[1](ControlMemRdSig);
+    buffer2.M_in[2](ControlMemWrtSig);
+    buffer2.EX_in[0](ControlRegDstSig);
+    buffer2.EX_in[1](ControlAluOpSig[0]);
+    buffer2.EX_in[2](ControlAluOpSig[1]);
+    buffer2.EX_in[3](ControlAluSrcSig);
     buffer2.next_instruction_adress_out(Buffer2NextAdressSig);
     buffer2.reg_data_1_out(Buffer2RsDataSig);
     buffer2.reg_data_2_out(Buffer2RtDataSig);
-    // buffer2.instruction_1_out(); MAYBE CHANGE ME
+    buffer2.instruction_1_out(Buffer2RdShamtFunctExtendedSig);
     buffer2.instruction_2_out(Buffer2RtSig);
     buffer2.instruction_3_out(Buffer2RdSig);
     buffer2.WB_out[0](Buffer2WBSig[0]);
     buffer2.WB_out[1](Buffer2WBSig[1]);
-    // buffer2.M_out(); // CHANGE ME
-    // buffer2.EX_out(); // CHANGE ME
+    buffer2.M_out[0](Buffer2MSig[0]);
+    buffer2.M_out[1](Buffer2MSig[1]);
+    buffer2.M_out[2](Buffer2MSig[2]);
+    buffer2.EX_out[0](Buffer2EXSig[0]);
+    buffer2.EX_out[1](Buffer2EXSig[1]);
+    buffer2.EX_out[2](Buffer2EXSig[2]);
+    buffer2.EX_out[3](Buffer2EXSig[3]);
     buffer2.clk(TestClk);
 
     buffer_3 buffer3("buffer3");
@@ -194,7 +206,9 @@ int sc_main(int argc, char* argv[]) {
     buffer3.some_instruction_in(RegDstMuxOutSig);
     buffer3.WB_in[0](Buffer2WBSig[0]);
     buffer3.WB_in[1](Buffer2WBSig[1]);
-    // buffer3.M_in(); CHANGE ME
+    buffer3.M_in[0](Buffer2MSig[0]);
+    buffer3.M_in[1](Buffer2MSig[1]);
+    buffer3.M_in[2](Buffer2MSig[2]);
     buffer3.add_result_out(Buffer3AddResultSig);
     buffer3.ula_zero_out(Buffer3ZeroSig);
     buffer3.ula_result_out(Buffer3UlaResultSig);
@@ -202,7 +216,9 @@ int sc_main(int argc, char* argv[]) {
     buffer3.some_instruction_out(Buffer3RegDestSig);
     buffer3.WB_out[0](Buffer3WBSig[0]);
     buffer3.WB_out[1](Buffer3WBSig[1]);
-    // buffer3.M_out(); CHANGE ME
+    buffer3.M_out[0](Buffer3MSig[0]);
+    buffer3.M_out[1](Buffer3MSig[1]);
+    buffer3.M_out[2](Buffer3MSig[2]);
     buffer3.clk(TestClk);
 
     buffer_4 buffer4("buffer4");
@@ -221,19 +237,19 @@ int sc_main(int argc, char* argv[]) {
     mux5 pc_mux("pc_mux");
     pc_mux.in1(PcAdderOutSig);
     pc_mux.in2(Buffer3AddResultSig);
-    pc_mux.choose(Buffer4WBSig[0]);
+    // pc_mux.choose(BranchSeiLaOq);
     pc_mux.out(PcMuxOutSig);
 
     mux5 reg_dst_mux("reg_dst_mux");
     reg_dst_mux.in1(Buffer2RtSig);
     reg_dst_mux.in2(Buffer2RdSig);
-    // reg_dst_mux.choose(); CHANGE ME
+    reg_dst_mux.choose(Buffer2EXSig[0]);
     reg_dst_mux.out(RegDstMuxOutSig);
 
     mux32 alu_src_mux("alu_src_mux");
     alu_src_mux.in1(Buffer2RtDataSig);
     alu_src_mux.in2(Buffer2RdShamtFunctExtendedSig);
-    // alu_src_mux.choose(); CHANGE ME
+    alu_src_mux.choose(Buffer2EXSig[3]);
     alu_src_mux.out(AluSrcMuxOutSig);
 
     mux32 mem_to_reg_mux("mem_to_reg_mux");
@@ -265,6 +281,8 @@ int sc_main(int argc, char* argv[]) {
     // instruction_decoder.rt();
     // instruction_decoder.rd();
     // instruction_decoder.rd_shamt_funct();
+
+    //TODO: AND coiso aqui
     
 
     //========================= waveform

@@ -5,7 +5,7 @@ SC_MODULE(alucontrol) {
     // TODO: Ver se esses 0b00 blablabla funciona mesmo, tenho a impressão qeu ja deu errado uma vez
     // In
 	sc_in<sc_uint<6>> function_code;
-    sc_in<sc_uint<2>> ALUOp;
+    sc_in<bool> ALUOp[2];
 
     // Out
     sc_out<sc_uint<3>> op;
@@ -13,10 +13,10 @@ SC_MODULE(alucontrol) {
 
 	void decode_op() {
         sc_uint<4> result_op = 0;
-        if(ALUOp.read() == 0b00){ // Add
+        if(ALUOp[0].read() == 0 && ALUOp[1].read() == 0){ // Add
             result_op = 5;
         }
-        else if(ALUOp.read() == 0b01){ // Subtract
+        else if(ALUOp[0].read() == 0 && ALUOp[1].read() == 1){ // Subtract
             result_op = 6;
         }
         else{
@@ -43,6 +43,6 @@ SC_MODULE(alucontrol) {
 
 	SC_CTOR(alucontrol) {
 		SC_METHOD(decode_op);
-		sensitive << function_code << ALUOp; // TODO: Eh isso memo?
+		sensitive << function_code << ALUOp[0] << ALUOp[1]; // TODO: Eh isso memo?
 	}
 };

@@ -11,8 +11,8 @@ SC_MODULE(buffer_2) {
     sc_in<sc_uint<5>> instruction_2_in; // [20 - 16]
     sc_in<sc_uint<5>> instruction_3_in; // [15 - 11]
     sc_in<bool> WB_in[2]; // RegWrite, MemtoReg
-    sc_in<sc_uint<3>> M_in; // PcSrc, MemRead, MemWrite
-    sc_in<sc_uint<4>> EX_in; // AluSrc, AluOp, RegDst
+    sc_in<bool> M_in[3]; // PcSrc, MemRead, MemWrite
+    sc_in<bool> EX_in[4]; // AluSrc, AluOp[2], RegDst
 
     // Out
     sc_out<sc_uint<5>> next_instruction_adress_out; // Maybe change this size
@@ -22,8 +22,8 @@ SC_MODULE(buffer_2) {
     sc_out<sc_uint<5>> instruction_2_out; // [20 - 16]
     sc_out<sc_uint<5>> instruction_3_out; // [15 - 11]
     sc_out<bool> WB_out[2]; // RegWrite, MemtoReg
-    sc_out<sc_uint<3>> M_out; // PcSrc, MemRead, MemWrite
-    sc_out<sc_uint<4>> EX_out; // AluSrc, AluOp, RegDst
+    sc_out<bool> M_out[3]; // PcSrc, MemRead, MemWrite
+    sc_out<bool> EX_out[4]; // AluSrc, AluOp[2], RegDst
 
     // Registers
     sc_bv<5> next_instruction_adress; // Maybe change this size
@@ -33,8 +33,8 @@ SC_MODULE(buffer_2) {
     sc_bv<5> instruction_2;
     sc_bv<5> instruction_3;
     bool WB[2]; // Control
-    sc_bv<3> M;
-    sc_bv<4> EX;
+    bool M[3];
+    bool EX[4];
 
     void write(){
         if(clk.read() == 0){
@@ -46,8 +46,13 @@ SC_MODULE(buffer_2) {
             instruction_3 = instruction_3_in.read();
             WB[0] = WB_in[0].read();
             WB[1] = WB_in[1].read();
-            M = M_in.read();
-            EX = EX_in.read();
+            M[0] = M_in[0].read();
+            M[1] = M_in[1].read();
+            M[2] = M_in[2].read();
+            EX[0] = EX_in[0].read();
+            EX[1] = EX_in[1].read();
+            EX[2] = EX_in[2].read();
+            EX[3] = EX_in[3].read();
         }
     }
 
@@ -61,8 +66,13 @@ SC_MODULE(buffer_2) {
             instruction_3_out = instruction_3;
             WB_out[0] = WB[0];
             WB_out[1] = WB[1];
-            M_out = M;
-            EX_out = EX;
+            M_out[0] = M[0];
+            M_out[1] = M[1];
+            M_out[2] = M[2];
+            EX_out[0] = EX[0];
+            EX_out[1] = EX[1];
+            EX_out[2] = EX[2];
+            EX_out[3] = EX[3];
         }
 	}
 
