@@ -238,7 +238,7 @@ int sc_main(int argc, char* argv[]) {
 
     sign_ext signal_extend("signal_extend");
     // signal_extend.in(); CHANGE ME
-    signal_extend.out(SignalExtendOutSig); // TODO: VER SE DA CERTO ISSO AI TA LIGADO
+    signal_extend.out(SignalExtendOutSig);
 
     sc_signal<sc_uint<5>> one_signal;
     one_signal.write(1);

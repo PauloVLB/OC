@@ -5,7 +5,7 @@
 int sc_main(int argc, char* argv[]) {
 
     sc_signal<sc_uint<16>> in_sig;
-    sc_signal<sc_uint<32>> out_sig;
+    sc_signal<sc_int<32>> out_sig;
 
 	sc_clock TestClk("TestClock", 10, SC_NS, 0.5);
 

@@ -7,7 +7,7 @@ SC_MODULE(sign_ext) {
 
     void do_ext() {
 		
-		out.write((int)(int16_t)in.read()); // TODO: VER SE DA CERTO ISSO AI TA LIGADO
+		out.write((int)(int16_t)in.read());
     }
 
 	SC_CTOR(sign_ext){
