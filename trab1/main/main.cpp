@@ -46,7 +46,7 @@ int sc_main(int argc, char* argv[]) {
     sc_signal<sc_uint<5>> Buffer1NextAdressSig;
 
     // Buffer2 Out Signals
-    sc_signal<bool>        Buffer2WBSig; // TODO: TA ERRADO
+    sc_signal<bool>        Buffer2WBSig[2];
     sc_signal<sc_uint<3>>  Buffer2MSig;
     sc_signal<sc_uint<4>>   Buffer2EXSig;
     sc_signal<sc_uint<5>> Buffer2NextAdressSig;
@@ -57,7 +57,7 @@ int sc_main(int argc, char* argv[]) {
     sc_signal<sc_uint<5>>  Buffer2RdSig;
 
     // Buffer3 Out Signals
-    sc_signal<bool>        Buffer3WBSig; // TODO: TA ERRADO
+    sc_signal<bool>        Buffer3WBSig[2];
     sc_signal<sc_uint<3>>  Buffer3MSig;
     sc_signal<sc_uint<5>>  Buffer3AddResultSig;
     sc_signal<bool>        Buffer3ZeroSig;
@@ -66,7 +66,7 @@ int sc_main(int argc, char* argv[]) {
     sc_signal<sc_uint<5>>  Buffer3RegDestSig;
 
     // Buffer4 Out Signals
-    sc_signal<bool>        Buffer4WBSig; // TODO: TA ERRADO
+    sc_signal<bool>        Buffer4WBSig[2];
     sc_signal<sc_int<32>>  Buffer4DataSig;
     sc_signal<sc_int<32>>  Buffer4UlaResultSig;
     sc_signal<sc_uint<5>>  Buffer4RegDestSig;
@@ -127,7 +127,7 @@ int sc_main(int argc, char* argv[]) {
     // bank_register.reg_in[1](); CHANGE ME
     bank_register.reg_wrt(Buffer4RegDestSig);
     bank_register.WD(MemToRegMuxOutSig);
-    // bank_register.WE(Buffer4WBSig); // TODO: TA ERRADO
+    bank_register.WE(Buffer4WBSig[0]);
     bank_register.reg_out[0](BankRegisterRsDataSig);
     bank_register.reg_out[1](BankRegisterRtDataSig);
     bank_register.clk(TestClk);
@@ -170,7 +170,8 @@ int sc_main(int argc, char* argv[]) {
     buffer2.instruction_1_in(SignalExtendOutSig);
     // buffer2.instruction_2_in(); CHANGE ME
     // buffer2.instruction_3_in(); CHANGE ME
-    // buffer2.WB_in(ControlRegWrtSig); // TODO: TA ERRADO
+    buffer2.WB_in[0](ControlRegWrtSig);
+    buffer2.WB_in[1](ControlMemToRegSig);
     // buffer2.M_in(); // CHANGE ME
     // buffer2.EX_in(); // CHANGE ME
     buffer2.next_instruction_adress_out(Buffer2NextAdressSig);
@@ -179,7 +180,8 @@ int sc_main(int argc, char* argv[]) {
     // buffer2.instruction_1_out(); MAYBE CHANGE ME
     buffer2.instruction_2_out(Buffer2RtSig);
     buffer2.instruction_3_out(Buffer2RdSig);
-    // buffer2.WB_out(Buffer2WBSig); // TODO: TA ERRADO
+    buffer2.WB_out[0](Buffer2WBSig[0]);
+    buffer2.WB_out[1](Buffer2WBSig[1]);
     // buffer2.M_out(); // CHANGE ME
     // buffer2.EX_out(); // CHANGE ME
     buffer2.clk(TestClk);
@@ -190,14 +192,16 @@ int sc_main(int argc, char* argv[]) {
     buffer3.ula_result_in(UlaResultSig);
     buffer3.reg_data_2_in(Buffer2RtDataSig);
     buffer3.some_instruction_in(RegDstMuxOutSig);
-    // buffer3.WB_in(Buffer2WBSig); // TODO: TA ERRADO
+    buffer3.WB_in[0](Buffer2WBSig[0]);
+    buffer3.WB_in[1](Buffer2WBSig[1]);
     // buffer3.M_in(); CHANGE ME
     buffer3.add_result_out(Buffer3AddResultSig);
     buffer3.ula_zero_out(Buffer3ZeroSig);
     buffer3.ula_result_out(Buffer3UlaResultSig);
     buffer3.reg_data_2_out(Buffer3RtDataSig);
     buffer3.some_instruction_out(Buffer3RegDestSig);
-    // buffer3.WB_out(Buffer3WBSig); // TODO: TA ERRADO
+    buffer3.WB_out[0](Buffer3WBSig[0]);
+    buffer3.WB_out[1](Buffer3WBSig[1]);
     // buffer3.M_out(); CHANGE ME
     buffer3.clk(TestClk);
 
@@ -205,17 +209,19 @@ int sc_main(int argc, char* argv[]) {
     buffer4.memory_data_in(MemoryDataSig);
     buffer4.ula_result_in(Buffer3UlaResultSig);
     buffer4.some_instruction_in(Buffer3RegDestSig);
-    // buffer4.WB_in(Buffer3WBSig); // TODO: TA ERRADO
+    buffer4.WB_in[0](Buffer3WBSig[0]);
+    buffer4.WB_in[1](Buffer3WBSig[1]);
     buffer4.memory_data_out(Buffer4DataSig);
     buffer4.ula_result_out(Buffer4UlaResultSig);
     buffer4.some_instruction_out(Buffer4RegDestSig);
-    // buffer4.WB_out(Buffer4WBSig); // TODO: TA ERRADO
+    buffer4.WB_out[0](Buffer4WBSig[0]);
+    buffer4.WB_out[1](Buffer4WBSig[1]);
     buffer4.clk(TestClk);
 
     mux5 pc_mux("pc_mux");
     pc_mux.in1(PcAdderOutSig);
     pc_mux.in2(Buffer3AddResultSig);
-    // pc_mux.choose(); CHANGE ME
+    pc_mux.choose(Buffer4WBSig[0]);
     pc_mux.out(PcMuxOutSig);
 
     mux5 reg_dst_mux("reg_dst_mux");
@@ -233,7 +239,7 @@ int sc_main(int argc, char* argv[]) {
     mux32 mem_to_reg_mux("mem_to_reg_mux");
     mem_to_reg_mux.in1(Buffer4DataSig);
     mem_to_reg_mux.in2(Buffer4UlaResultSig);
-    // mem_to_reg_mux.choose(); CHANGE ME
+    mem_to_reg_mux.choose(Buffer4WBSig[1]);
     mem_to_reg_mux.out(MemToRegMuxOutSig);
 
     sign_ext signal_extend("signal_extend");

@@ -9,7 +9,7 @@ SC_MODULE(buffer_3) {
     sc_in<sc_int<32>> ula_result_in;
     sc_in<sc_int<32>> reg_data_2_in;
     sc_in<sc_uint<5>> some_instruction_in; // [20 - 16] or [15 - 11]
-    sc_in<bool> WB_in; // Control
+    sc_in<bool> WB_in[2]; // RegWrite, MemtoReg
     sc_in<sc_uint<3>> M_in; // PcSrc, MemRead, MemWrite
 
     // Out
@@ -18,7 +18,7 @@ SC_MODULE(buffer_3) {
     sc_out<sc_int<32>> ula_result_out;
     sc_out<sc_int<32>> reg_data_2_out;
     sc_out<sc_uint<5>> some_instruction_out; // [20 - 16] or [15 - 11]
-    sc_out<bool> WB_out; // Control
+    sc_out<bool> WB_out[2]; // RegWrite, MemtoReg
     sc_out<sc_uint<3>> M_out; // PcSrc, MemRead, MemWrite
 
     // Registers
@@ -27,7 +27,7 @@ SC_MODULE(buffer_3) {
     sc_bv<32> ula_result;
     sc_bv<32> reg_data_2;
     sc_bv<5> some_instruction;
-    bool WB; // Control
+    bool WB[2]; // Control
     sc_bv<3> M;
 
     void write(){
@@ -37,7 +37,8 @@ SC_MODULE(buffer_3) {
             ula_result = ula_result_in.read();
             reg_data_2 = reg_data_2_in.read();
             some_instruction = some_instruction_in.read();
-            WB = WB_in.read();
+            WB[0] = WB_in[0].read();
+            WB[1] = WB_in[1].read();
             M = M_in.read();
         }
     }
@@ -49,7 +50,8 @@ SC_MODULE(buffer_3) {
             ula_result_out = ula_result;
             reg_data_2_out = reg_data_2;
             some_instruction_out = some_instruction;
-            WB_out = WB;
+            WB_out[0] = WB[0];
+            WB_out[1] = WB[1];
             M_out = M;
         }
 	}

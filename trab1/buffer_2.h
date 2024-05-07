@@ -10,7 +10,7 @@ SC_MODULE(buffer_2) {
     sc_in<sc_int<32>> instruction_1_in; // [15 - 0], but extended (size 32?)
     sc_in<sc_uint<5>> instruction_2_in; // [20 - 16]
     sc_in<sc_uint<5>> instruction_3_in; // [15 - 11]
-    sc_in<bool> WB_in; // Control
+    sc_in<bool> WB_in[2]; // RegWrite, MemtoReg
     sc_in<sc_uint<3>> M_in; // PcSrc, MemRead, MemWrite
     sc_in<sc_uint<4>> EX_in; // AluSrc, AluOp, RegDst
 
@@ -21,7 +21,7 @@ SC_MODULE(buffer_2) {
     sc_out<sc_int<32>> instruction_1_out; // [15 - 0], but extended (size 32?)
     sc_out<sc_uint<5>> instruction_2_out; // [20 - 16]
     sc_out<sc_uint<5>> instruction_3_out; // [15 - 11]
-    sc_out<bool> WB_out; // Control
+    sc_out<bool> WB_out[2]; // RegWrite, MemtoReg
     sc_out<sc_uint<3>> M_out; // PcSrc, MemRead, MemWrite
     sc_out<sc_uint<4>> EX_out; // AluSrc, AluOp, RegDst
 
@@ -32,7 +32,7 @@ SC_MODULE(buffer_2) {
     sc_bv<32> instruction_1;
     sc_bv<5> instruction_2;
     sc_bv<5> instruction_3;
-    bool WB; // Control
+    bool WB[2]; // Control
     sc_bv<3> M;
     sc_bv<4> EX;
 
@@ -44,7 +44,8 @@ SC_MODULE(buffer_2) {
             instruction_1 = instruction_1_in.read();
             instruction_2 = instruction_2_in.read();
             instruction_3 = instruction_3_in.read();
-            WB = WB_in.read();
+            WB[0] = WB_in[0].read();
+            WB[1] = WB_in[1].read();
             M = M_in.read();
             EX = EX_in.read();
         }
@@ -58,7 +59,8 @@ SC_MODULE(buffer_2) {
             instruction_1_out = instruction_1;
             instruction_2_out = instruction_2;
             instruction_3_out = instruction_3;
-            WB_out = WB;
+            WB_out[0] = WB[0];
+            WB_out[1] = WB[1];
             M_out = M;
             EX_out = EX;
         }
