@@ -7,7 +7,7 @@ SC_MODULE(buffer_2) {
     sc_in<sc_uint<5>> next_instruction_adress_in; // Maybe change this size
     sc_in<sc_int<32>> reg_data_1_in;
     sc_in<sc_int<32>> reg_data_2_in;
-    sc_in<sc_uint<32>> instruction_1_in; // [15 - 0], but extended (size 32?)
+    sc_in<sc_int<32>> instruction_1_in; // [15 - 0], but extended (size 32?)
     sc_in<sc_uint<5>> instruction_2_in; // [20 - 16]
     sc_in<sc_uint<5>> instruction_3_in; // [15 - 11]
     sc_in<bool> WB_in; // Control
@@ -18,7 +18,7 @@ SC_MODULE(buffer_2) {
     sc_out<sc_uint<5>> next_instruction_adress_out; // Maybe change this size
     sc_out<sc_int<32>> reg_data_1_out;
     sc_out<sc_int<32>> reg_data_2_out;
-    sc_out<sc_uint<32>> instruction_1_out; // [15 - 0], but extended (size 32?)
+    sc_out<sc_int<32>> instruction_1_out; // [15 - 0], but extended (size 32?)
     sc_out<sc_uint<5>> instruction_2_out; // [20 - 16]
     sc_out<sc_uint<5>> instruction_3_out; // [15 - 11]
     sc_out<bool> WB_out; // Control

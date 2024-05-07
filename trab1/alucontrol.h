@@ -8,7 +8,7 @@ SC_MODULE(alucontrol) {
     sc_in<sc_uint<2>> ALUOp;
 
     // Out
-    sc_out<sc_uint<4>> op;
+    sc_out<sc_uint<3>> op;
 
 
 	void decode_op() {

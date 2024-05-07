@@ -3,10 +3,11 @@
 
 SC_MODULE(sign_ext) {
 	sc_in<sc_uint<16>> in;
-    sc_out<sc_uint<32>> out;
+    sc_out<sc_int<32>> out;
 
     void do_ext() {
-        out = in.read();
+		
+		out.write((int)(int16_t)in.read()); // TODO: VER SE DA CERTO ISSO AI TA LIGADO
     }
 
 	SC_CTOR(sign_ext){
