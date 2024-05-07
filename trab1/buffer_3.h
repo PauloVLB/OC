@@ -9,7 +9,8 @@ SC_MODULE(buffer_3) {
     sc_in<sc_int<32>> ula_result_in;
     sc_in<sc_int<32>> reg_data_2_in;
     sc_in<sc_uint<5>> some_instruction_in; // [20 - 16] or [15 - 11]
-    sc_in<bool> WB_in, M_in; // Control
+    sc_in<bool> WB_in; // Control
+    sc_in<sc_uint<3>> M_in; // PcSrc, MemRead, MemWrite
 
     // Out
     sc_out<sc_uint<5>> add_result_out; // What is this???????
@@ -17,7 +18,8 @@ SC_MODULE(buffer_3) {
     sc_out<sc_int<32>> ula_result_out;
     sc_out<sc_int<32>> reg_data_2_out;
     sc_out<sc_uint<5>> some_instruction_out; // [20 - 16] or [15 - 11]
-    sc_out<bool> WB_out, M_out; // Control
+    sc_out<bool> WB_out; // Control
+    sc_out<sc_uint<3>> M_out; // PcSrc, MemRead, MemWrite
 
     // Registers
     sc_bv<5> add_result; // Maybe change this size
@@ -25,7 +27,8 @@ SC_MODULE(buffer_3) {
     sc_bv<32> ula_result;
     sc_bv<32> reg_data_2;
     sc_bv<5> some_instruction;
-    bool WB, M; // Control
+    bool WB; // Control
+    sc_bv<3> M;
 
     void write(){
         if(clk.read() == 0){
