@@ -24,6 +24,7 @@
 /// opcode = 0b100011 (lw)
 /// opcode = 0b101011 (sw)
 /// opcode = 0b000100 (beq)
+/// opcode = 0b000111 (bne)
 ///
 /// J-type:
 /// opcode = 0b000010 (j)
@@ -33,7 +34,7 @@ SC_MODULE(control) {
     sc_in<bool> clk;
 
     sc_in<sc_uint<6>> opcode;
-    sc_out<bool> RegDst, AluSrc, Branch, MemRd, MemWrt, RegWrt, MemToReg;
+    sc_out<bool> RegDst, AluSrc, Branch[2], MemRd, MemWrt, RegWrt, MemToReg;
     sc_out<bool> AluOp[2];
 
     void do_control() {
@@ -42,7 +43,8 @@ SC_MODULE(control) {
             case 0b000000: // R-type
                 RegDst = 1;
                 AluSrc = 0;
-                Branch = 0;
+                Branch[0] = 0;
+                Branch[1] = 0;
                 MemRd = 0;
                 MemWrt = 0;
                 RegWrt = 1;
@@ -54,7 +56,8 @@ SC_MODULE(control) {
             case 0b100011: // lw
                 RegDst = 0;
                 AluSrc = 1;
-                Branch = 0;
+                Branch[0] = 0;
+                Branch[1] = 0;
                 MemRd = 1;
                 MemWrt = 0;
                 RegWrt = 1;
@@ -66,7 +69,8 @@ SC_MODULE(control) {
             case 0b101011: // sw
                 RegDst = 0;
                 AluSrc = 1;
-                Branch = 0;
+                Branch[0] = 0;
+                Branch[1] = 0;
                 MemRd = 0;
                 MemWrt = 1;
                 RegWrt = 0;
@@ -78,7 +82,8 @@ SC_MODULE(control) {
             case 0b000100: // beq
                 RegDst = 0;
                 AluSrc = 0;
-                Branch = 1;
+                Branch[0] = 0;
+                Branch[1] = 1;
                 MemRd = 0;
                 MemWrt = 0;
                 RegWrt = 0;
@@ -87,10 +92,24 @@ SC_MODULE(control) {
                 AluOp[0] = 0;
                 AluOp[1] = 1;
                 break;
-            case 0b000010: // TODO: Implement j
+            case 0b000111: // bne
                 RegDst = 0;
                 AluSrc = 0;
-                Branch = 0;
+                Branch[0] = 1;
+                Branch[1] = 0;
+                MemRd = 0;
+                MemWrt = 0;
+                RegWrt = 0;
+                MemToReg = 0;
+                // AluOp = 0b01;
+                AluOp[0] = 0;
+                AluOp[1] = 1;
+                break;
+            case 0b000010: // j
+                RegDst = 0;
+                AluSrc = 0;
+                Branch[0] = 1;
+                Branch[1] = 1;
                 MemRd = 0;
                 MemWrt = 0;
                 RegWrt = 0;

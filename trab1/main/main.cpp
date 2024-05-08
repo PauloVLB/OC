@@ -7,7 +7,7 @@
 #include "../buffer_3.h"
 #include "../buffer_4.h"
 #include "../control.h"
-#include "../instruction_decoder.h"
+#include "../branch_component.h"
 #include "../memory_data.h"
 #include "../memory_instructions.h"
 #include "../mux.h"
@@ -38,18 +38,22 @@ int sc_main(int argc, char* argv[]) {
     sc_signal<sc_uint<3>>  AluControlOpSig;
 
     // Control Out Signals
-    sc_out<bool> ControlRegDstSig, ControlAluSrcSig, ControlBranchSig, ControlMemRdSig, ControlMemWrtSig, ControlRegWrtSig, ControlMemToRegSig;
+    sc_out<bool> ControlRegDstSig, ControlAluSrcSig, ControlBranchSig[2], ControlMemRdSig, ControlMemWrtSig, ControlRegWrtSig, ControlMemToRegSig;
     sc_signal<bool> ControlAluOpSig[2];
 
     // Buffer1 Out Signals
-    sc_signal<sc_uint<32>> Buffer1InstructionDataSig;
-    sc_signal<sc_uint<5>> Buffer1NextAdressSig;
+    // sc_signal<sc_uint<5>> Buffer1NextAdressSig;
+    sc_signal<sc_uint<6>> Buffer1OpcodeSig;
+    sc_signal<sc_uint<5>> Buffer1RsSig;
+    sc_signal<sc_uint<5>> Buffer1RtSig;
+    sc_signal<sc_uint<5>> Buffer1RdSig;
+    sc_signal<sc_uint<16>> Buffer1RdShamtFunctSig;
 
     // Buffer2 Out Signals
     sc_signal<bool>        Buffer2WBSig[2];
-    sc_signal<bool>  Buffer2MSig[3];
+    sc_signal<bool>  Buffer2MSig[4];
     sc_signal<bool>   Buffer2EXSig[4];
-    sc_signal<sc_uint<5>> Buffer2NextAdressSig;
+    // sc_signal<sc_uint<5>> Buffer2NextAdressSig;
     sc_signal<sc_int<32>>  Buffer2RsDataSig;
     sc_signal<sc_int<32>>  Buffer2RtDataSig;
     sc_signal<sc_int<32>> Buffer2RdShamtFunctExtendedSig;
@@ -58,8 +62,8 @@ int sc_main(int argc, char* argv[]) {
 
     // Buffer3 Out Signals
     sc_signal<bool>        Buffer3WBSig[2];
-    sc_signal<bool>  Buffer3MSig[3];
-    sc_signal<sc_uint<5>>  Buffer3AddResultSig;
+    sc_signal<bool>  Buffer3MSig[4];
+    sc_signal<sc_uint<5>>  Buffer3BranchAdressSig;
     sc_signal<bool>        Buffer3ZeroSig;
     sc_signal<sc_int<32>>  Buffer3UlaResultSig;
     sc_signal<sc_int<32>>  Buffer3RtDataSig;
@@ -73,9 +77,6 @@ int sc_main(int argc, char* argv[]) {
 
     // PC Adder Out Signals
     sc_signal<sc_uint<5>> PcAdderOutSig;
-
-    // Branch Adder Out Signals
-    sc_signal<sc_uint<5>> BranchAdderOutSig;
 
     // Signal Extend Out Signals
     sc_signal<sc_int<32>> SignalExtendOutSig;
@@ -92,13 +93,8 @@ int sc_main(int argc, char* argv[]) {
     // MemToReg Mux Out Signals
     sc_signal<sc_int<32>> MemToRegMuxOutSig;
 
-    // Instruction Decoder Out Signals
-    sc_signal<sc_uint<6>> InstructionDecoderOpcodeSig;
-    sc_signal<sc_uint<6>> InstructionDecoderRsSig;
-    sc_signal<sc_uint<6>> InstructionDecoderRtSig;
-    sc_signal<sc_uint<6>> InstructionDecoderRdSig;
-    sc_signal<sc_uint<6>> InstructionDecoderRdShamtFunctSig;
-
+    // Branch Component Out Signals
+    sc_signal<bool> BranchComponentOutSig;
 
 
     sc_clock TestClk("TestClock", 10, SC_NS, 0.5);
@@ -117,14 +113,14 @@ int sc_main(int argc, char* argv[]) {
     dmem memory_data("memory_data"); // OK!
     memory_data.address(Buffer3UlaResultSig);
     memory_data.write_data(Buffer3RtDataSig);
-    memory_data.mem_read(Buffer3MSig[1]);
-    memory_data.mem_write(Buffer3MSig[2]);
+    memory_data.mem_read(Buffer3MSig[2]);
+    memory_data.mem_write(Buffer3MSig[3]);
     memory_data.read_data(MemoryDataSig);
     memory_data.clk(TestClk);
 
     bankreg bank_register("bank_register");
-    // bank_register.reg_in[0](); CHANGE ME
-    // bank_register.reg_in[1](); CHANGE ME
+    bank_register.reg_in[0](Buffer1RsSig);
+    bank_register.reg_in[1](Buffer1RtSig);
     bank_register.reg_wrt(Buffer4RegDestSig);
     bank_register.WD(MemToRegMuxOutSig);
     bank_register.WE(Buffer4WBSig[0]);
@@ -140,16 +136,17 @@ int sc_main(int argc, char* argv[]) {
     ula.result(UlaResultSig);
 
     alucontrol alu_control("alu_control");
-    // alu_control.function_code(); CHANGE ME
+    alu_control.extendedSignal(Buffer2RdShamtFunctExtendedSig);
     alu_control.ALUOp[0](Buffer2EXSig[1]);
     alu_control.ALUOp[1](Buffer2EXSig[2]);
     alu_control.op(AluControlOpSig);
 
     control control("control");
-    // control.opcode(); CHANGE ME
+    control.opcode(Buffer1OpcodeSig);
     control.RegDst(ControlRegDstSig);
     control.AluSrc(ControlAluSrcSig);
-    control.Branch(ControlBranchSig);
+    control.Branch[0](ControlBranchSig[0]);
+    control.Branch[1](ControlBranchSig[1]);
     control.MemRd(ControlMemRdSig);
     control.MemWrt(ControlMemWrtSig);
     control.RegWrt(ControlRegWrtSig);
@@ -159,29 +156,34 @@ int sc_main(int argc, char* argv[]) {
     control.clk(TestClk);
 
     buffer_1 buffer1("buffer1");
-    buffer1.next_instruction_adress_in(PcAdderOutSig);
+    // buffer1.next_instruction_adress_in(PcAdderOutSig);
     buffer1.instruction_data_in(InstructionDataSig);
-    buffer1.next_instruction_adress_out(Buffer1NextAdressSig);
-    // buffer1.instruction_data_out(Buffer1InstructionDataSig); MAYBE CHANGE ME
+    // buffer1.next_instruction_adress_out(Buffer1NextAdressSig);
+    buffer1.opcode_out(Buffer1OpcodeSig);
+    buffer1.rs_out(Buffer1RsSig);
+    buffer1.rt_out(Buffer1RtSig);
+    buffer1.rd_out(Buffer1RdSig);
+    buffer1.rdShamtFunct_out(Buffer1RdShamtFunctSig);
     buffer1.clk(TestClk);
 
     buffer_2 buffer2("buffer2");
-    buffer2.next_instruction_adress_in(Buffer1NextAdressSig);
+    // buffer2.next_instruction_adress_in(Buffer1NextAdressSig);
     buffer2.reg_data_1_in(BankRegisterRsDataSig);
     buffer2.reg_data_2_in(BankRegisterRtDataSig);
     buffer2.instruction_1_in(SignalExtendOutSig);
-    // buffer2.instruction_2_in(); CHANGE ME
-    // buffer2.instruction_3_in(); CHANGE ME
+    buffer2.instruction_2_in(Buffer1RtSig);
+    buffer2.instruction_3_in(Buffer1RdSig);
     buffer2.WB_in[0](ControlRegWrtSig);
     buffer2.WB_in[1](ControlMemToRegSig);
-    buffer2.M_in[0](ControlBranchSig);
-    buffer2.M_in[1](ControlMemRdSig);
-    buffer2.M_in[2](ControlMemWrtSig);
+    buffer2.M_in[0](ControlBranchSig[0]);
+    buffer2.M_in[1](ControlBranchSig[1]);
+    buffer2.M_in[2](ControlMemRdSig);
+    buffer2.M_in[3](ControlMemWrtSig);
     buffer2.EX_in[0](ControlRegDstSig);
     buffer2.EX_in[1](ControlAluOpSig[0]);
     buffer2.EX_in[2](ControlAluOpSig[1]);
     buffer2.EX_in[3](ControlAluSrcSig);
-    buffer2.next_instruction_adress_out(Buffer2NextAdressSig);
+    // buffer2.next_instruction_adress_out(Buffer2NextAdressSig);
     buffer2.reg_data_1_out(Buffer2RsDataSig);
     buffer2.reg_data_2_out(Buffer2RtDataSig);
     buffer2.instruction_1_out(Buffer2RdShamtFunctExtendedSig);
@@ -192,6 +194,7 @@ int sc_main(int argc, char* argv[]) {
     buffer2.M_out[0](Buffer2MSig[0]);
     buffer2.M_out[1](Buffer2MSig[1]);
     buffer2.M_out[2](Buffer2MSig[2]);
+    buffer2.M_out[3](Buffer2MSig[3]);
     buffer2.EX_out[0](Buffer2EXSig[0]);
     buffer2.EX_out[1](Buffer2EXSig[1]);
     buffer2.EX_out[2](Buffer2EXSig[2]);
@@ -199,7 +202,7 @@ int sc_main(int argc, char* argv[]) {
     buffer2.clk(TestClk);
 
     buffer_3 buffer3("buffer3");
-    buffer3.add_result_in(BranchAdderOutSig);
+    buffer3.branch_adress_in(Buffer2RdShamtFunctExtendedSig);
     buffer3.ula_zero_in(UlaZeroSig);
     buffer3.ula_result_in(UlaResultSig);
     buffer3.reg_data_2_in(Buffer2RtDataSig);
@@ -209,7 +212,8 @@ int sc_main(int argc, char* argv[]) {
     buffer3.M_in[0](Buffer2MSig[0]);
     buffer3.M_in[1](Buffer2MSig[1]);
     buffer3.M_in[2](Buffer2MSig[2]);
-    buffer3.add_result_out(Buffer3AddResultSig);
+    buffer3.M_in[3](Buffer2MSig[3]);
+    buffer3.branch_adress_out(Buffer3BranchAdressSig);
     buffer3.ula_zero_out(Buffer3ZeroSig);
     buffer3.ula_result_out(Buffer3UlaResultSig);
     buffer3.reg_data_2_out(Buffer3RtDataSig);
@@ -219,6 +223,7 @@ int sc_main(int argc, char* argv[]) {
     buffer3.M_out[0](Buffer3MSig[0]);
     buffer3.M_out[1](Buffer3MSig[1]);
     buffer3.M_out[2](Buffer3MSig[2]);
+    buffer3.M_out[3](Buffer3MSig[3]);
     buffer3.clk(TestClk);
 
     buffer_4 buffer4("buffer4");
@@ -236,8 +241,8 @@ int sc_main(int argc, char* argv[]) {
 
     mux5 pc_mux("pc_mux");
     pc_mux.in1(PcAdderOutSig);
-    pc_mux.in2(Buffer3AddResultSig);
-    // pc_mux.choose(BranchSeiLaOq);
+    pc_mux.in2(Buffer3BranchAdressSig);
+    pc_mux.choose(BranchComponentOutSig);
     pc_mux.out(PcMuxOutSig);
 
     mux5 reg_dst_mux("reg_dst_mux");
@@ -259,7 +264,7 @@ int sc_main(int argc, char* argv[]) {
     mem_to_reg_mux.out(MemToRegMuxOutSig);
 
     sign_ext signal_extend("signal_extend");
-    // signal_extend.in(); CHANGE ME
+    signal_extend.in(Buffer1RdShamtFunctSig);
     signal_extend.out(SignalExtendOutSig);
 
     sc_signal<sc_uint<5>> one_signal;
@@ -269,20 +274,10 @@ int sc_main(int argc, char* argv[]) {
     pc_adder.in2(one_signal);
     pc_adder.out(PcAdderOutSig);
 
-    adder5 branch_adder("branch_adder");
-    branch_adder.in1(Buffer2NextAdressSig);
-    // branch_adder.in2(); CHANGE ME???????????????????????????
-    branch_adder.out(BranchAdderOutSig);
-
-    instruction_decoder instruction_decoder("instruction_decoder");
-    // instruction_decoder.instr();
-    // instruction_decoder.opcode();
-    // instruction_decoder.rs();
-    // instruction_decoder.rt();
-    // instruction_decoder.rd();
-    // instruction_decoder.rd_shamt_funct();
-
-    //TODO: AND coiso aqui
+    branch_component branch_component("branch_component");
+    branch_component.Branch[0](Buffer3MSig[0]);
+    branch_component.Branch[1](Buffer3MSig[1]);
+    branch_component.zero(Buffer3ZeroSig);
     
 
     //========================= waveform
