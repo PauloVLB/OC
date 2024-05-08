@@ -38,7 +38,7 @@ SC_MODULE(dmem) {
     SC_CTOR(dmem){
 		int i;
 		for(i=0;i<32;i++)
-			memory[i]=37; // Inicializa a memória a normal normalmente é 37
+			memory[i]=0; // Inicializa a memória a normal normalmente é 37
 		SC_METHOD(write);
 			sensitive << clk.neg();
 		SC_METHOD(read);

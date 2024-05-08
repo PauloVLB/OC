@@ -17,7 +17,7 @@ SC_MODULE(ula) {
 		switch (op.read()) {
             case 0:
                 res = A_val & B_val;
-                std::cout << "Na ula, resultado de A_val: " << A_val << " AND B_val: " << B_val << " = res: " << res << std::endl;
+                // std::cout << "Na ula, resultado de A_val: " << A_val << " AND B_val: " << B_val << " = res: " << res << std::endl;
                 // std::cout << "case 0" << std::endl;
                 break;
             case 1:
@@ -34,17 +34,17 @@ SC_MODULE(ula) {
                 break;
             case 4:
                 res = A_val < B_val;
-                std::cout << "Na ula, resultado de A_val: " << A_val << " < B_val: " << B_val << " = res: " << res << std::endl;
+                // std::cout << "Na ula, resultado de A_val: " << A_val << " < B_val: " << B_val << " = res: " << res << std::endl;
                 // std::cout << "case 4" << std::endl;
                 break;
             case 5:
                 res = A_val + B_val;
-                std::cout << "Na ula, resultado de A_val: " << A_val << " + B_val: " << B_val << " = res: " << res << std::endl;
+                // std::cout << "Na ula, resultado de A_val: " << A_val << " + B_val: " << B_val << " = res: " << res << std::endl;
                 // std::cout << "case 5" << std::endl;
                 break;
             case 6:
                 res = A_val - B_val;
-                std::cout << "Na ula, resultado de A_val: " << A_val << " - B_val: " << B_val << " = res: " << res << std::endl;
+                // std::cout << "Na ula, resultado de A_val: " << A_val << " - B_val: " << B_val << " = res: " << res << std::endl;
                 // std::cout << "case 6" << std::endl;
                 break;
             default:

@@ -3,45 +3,14 @@
 SC_MODULE(main_testbench){
     sc_in<bool> Clk;
 
+    int i = 0;
     void TbGen() {
-
-        wait(); 
-
-        wait(); 
-
-        wait();
         
-        wait(); 
-
-        wait();
-
-        wait(); 
-
-        wait(); 
-
-        wait();
-        
-        wait(); 
-
-        wait();
-
-        wait();
-        
-        wait(); 
-
-        wait();
-
-        wait();
-        
-        wait(); 
-
-        wait();
-
-        wait();
-        
-        wait(); 
-
-        wait();
+        std::cout << "Testbench started" << std::endl;
+        for(int i=0; i < 37; ++i){
+            std::cout << "Clock: " << i << std::endl;
+            wait();
+        }
 
         sc_stop();
     }

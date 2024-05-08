@@ -17,9 +17,9 @@ SC_MODULE(bankreg) {
     void write() {
         if(clk.read() == 0 && WE.read()) {
             reg[reg_wrt.read()] = WD.read();
-            std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
+            // std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
             std::cout << "No write do bankreg." << std::endl;
-            for(int i = 0; i < 13; i++) {
+            for(int i = 0; i < 4; i++) {
                 std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
             }
         }
@@ -34,16 +34,20 @@ SC_MODULE(bankreg) {
         // std::cout << "reg_out[1] = " << reg_out[1] << std::endl;
         
 
-        std::cout << "No read do bankreg." << std::endl;
-        for(int i = 0; i < 13; i++) {
-            std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
-        }
+        // std::cout << "No read do bankreg." << std::endl;
+        // for(int i = 0; i < 12; i++) {
+        //     std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
+        // }
     }
 
 	SC_CTOR(bankreg) {
-        for(int i = 0; i < 5; i++) {
-            reg[i] = i;
-        }
+        /// Algoritmo 1 -- Perfeito
+		// Pre-Processamento:
+		// $reg0 = 0, $reg1 = 1, $reg2 = 2, $reg3 = 3, $reg4 = 4, $reg5 = 5, $reg6 = 6, 
+		// $reg7 = 7, $reg8 = 8, $reg9 = 9, $reg10 = 10, $reg11 = 11
+        // for(int i = 0; i < 12; i++) {
+        //     reg[i] = i;
+        // }
 		SC_METHOD(write);
 		sensitive << clk.neg();
 

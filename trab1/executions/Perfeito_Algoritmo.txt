@@ -1,0 +1,11 @@
+Algoritmo 1 -- Perfeito
+
+Pre-Processamento:
+$reg0 = 0, $reg1 = 1, $reg2 = 2, $reg3 = 3, $reg4 = 4, $reg5 = 5, $reg6 = 6, 
+$reg7 = 7, $reg8 = 8, $reg9 = 9, $reg10 = 10, $reg11 = 11
+
+add $reg3, $reg1, $reg2
+lw $reg4, 0($reg6)
+sub $reg7, $reg8, $reg9
+xor $reg10, $reg10, $reg11
+sw $reg5, 10($reg0)

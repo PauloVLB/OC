@@ -14,8 +14,8 @@ SC_MODULE(pc) {
         if(clk.read() == 0) {
             curr_instruction = instruction_address_in.read(); // TODO: memory é bv, mas write data é sc_int. Funciona?
         }
-        std::cout << "No write do pc:" << instruction_address_in.read();
-        std::cout << " Curr_instruction = " << curr_instruction << std::endl;
+        std::cout << "No write do pc:" << instruction_address_in.read() << std::endl;
+        // std::cout << " Curr_instruction = " << curr_instruction << std::endl;
     }
 
     void read(){
@@ -31,7 +31,7 @@ SC_MODULE(pc) {
                 instruction_address_out = curr_instruction;
             }
         }
-        std::cout << "No read do pc. Curr_instruction = " << curr_instruction << ". Adress_out = " << adress_out << std::endl;
+        std::cout << "No read do pc. Curr_instruction = " << curr_instruction.to_uint() << ".\n"; // Adress_out = " << adress_out << std::endl;
 	}
 
 	SC_CTOR(pc){

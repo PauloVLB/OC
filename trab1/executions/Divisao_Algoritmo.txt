@@ -1,0 +1,9 @@
+Algoritmo 2 -- Divisão
+addi $reg1, $zero, 15
+addi $reg2, $zero, 5
+addi $reg3, $zero, 0
+ENQUANTO:
+	sub $reg1, $reg1, $reg2
+	addi $reg3, $reg3, 1
+	bne $reg1, $zero, ENQUANTO
+FIM:

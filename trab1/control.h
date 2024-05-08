@@ -83,7 +83,7 @@ SC_MODULE(control) {
                 RegWrt = 1;
                 MemToReg = 0;
                 // AluOp = 0b10;
-                AluOp[0] = 1;
+                AluOp[0] = 0;
                 AluOp[1] = 0;
                 break;
             case 0b100011: // lw
