@@ -42,6 +42,14 @@ SC_MODULE(imem) {
 		/// BNE Instructions
 		// memory[0] = 0b00011100010000010000000000001000; // 000111 (bne) 00000 ($zero) 00000 ($zero) 0000000000000000 (endereco do branch)
 
+		/// LW Instructions
+		// //            V----VV---VV---VV---VV---VV----V
+		// memory[0] = 0b10001100000000010000000000000000; // 100011 (lw) 00000 ($zero) 00001 ($reg1) 0000000000000000 (offset)
+
+		/// SW Instructions
+		//            V----VV---VV---VV---VV---VV----V
+		memory[0] = 0b10101100000000010000000000000000; // 101011 (sw) 00000 ($zero) 00001 ($reg1) 0000000000000000 (offset)
+
 		SC_METHOD(read);
 		sensitive << instruction_address;
 	}

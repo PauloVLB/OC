@@ -20,12 +20,17 @@ SC_MODULE(dmem) {
         real_adress = address.read().range(4,0);
         if(clk.read() == 0 && mem_write.read()) {
             memory[real_adress] = write_data.read(); // TODO: memory é bv, mas write data é sc_int. Funciona?
+
+            std::cout << "No memory data write: " << std::endl;
+            for(int i = 0; i < 12; i++) {
+                std::cout << "memory[" << i << "] = " << memory[i] << std::endl;
+            }
         }
     }
 
     void read() {
         real_adress = address.read().range(4,0);
-        if(clk.read() == 1 && mem_read.read()) {
+        if(mem_read.read()) {
             read_data = memory[real_adress]; // TODO: memory é bv, mas read data é sc_int. Funciona?
         }
     }
@@ -37,6 +42,6 @@ SC_MODULE(dmem) {
 		SC_METHOD(write);
 			sensitive << clk.neg();
 		SC_METHOD(read);
-			sensitive << clk.pos();
+			sensitive << address << mem_read;
 	}
 };
