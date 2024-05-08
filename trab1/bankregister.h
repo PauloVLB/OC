@@ -19,7 +19,7 @@ SC_MODULE(bankreg) {
             reg[reg_wrt.read()] = WD.read();
             // std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
             std::cout << "No write do bankreg." << std::endl;
-            for(int i = 0; i < 6; i++) {
+            for(int i = 0; i < 13; i++) {
                 std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
             }
         }
@@ -35,7 +35,7 @@ SC_MODULE(bankreg) {
         
 
         std::cout << "No read do bankreg." << std::endl;
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 13; i++) {
             std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
         }
     }
