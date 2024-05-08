@@ -18,10 +18,10 @@ SC_MODULE(bankreg) {
         if(clk.read() == 0 && WE.read()) {
             reg[reg_wrt.read()] = WD.read();
             // std::cout << "reg[" << reg_wrt.read() << "] = " << reg[reg_wrt.read()] << std::endl;
-            std::cout << "No write do bankreg." << std::endl;
-            for(int i = 0; i < 13; i++) {
-                std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
-            }
+            // std::cout << "No write do bankreg." << std::endl;
+            // for(int i = 0; i < 13; i++) {
+            //     std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
+            // }
         }
     }
 
@@ -34,10 +34,10 @@ SC_MODULE(bankreg) {
         // std::cout << "reg_out[1] = " << reg_out[1] << std::endl;
         
 
-        std::cout << "No read do bankreg." << std::endl;
-        for(int i = 0; i < 13; i++) {
-            std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
-        }
+        // std::cout << "No read do bankreg." << std::endl;
+        // for(int i = 0; i < 13; i++) {
+        //     std::cout << "reg[" << i << "] = " << reg[i] << std::endl;
+        // }
     }
 
 	SC_CTOR(bankreg) {

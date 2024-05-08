@@ -44,6 +44,7 @@ SC_MODULE(ula) {
                 break;
             case 6:
                 res = A_val - B_val;
+                std::cout << "Na ula, resultado de A_val: " << A_val << " - B_val: " << B_val << " = res: " << res << std::endl;
                 // std::cout << "case 6" << std::endl;
                 break;
             default:
@@ -55,6 +56,9 @@ SC_MODULE(ula) {
         result.write(res);
         if(res == 0) {
             zero = 1;
+        }
+        else{
+            zero = 0;
         }
 	}
 
