@@ -12,6 +12,9 @@ SC_MODULE(imem) {
 	}
 
 	SC_CTOR(imem){
+		for(int i=0; i < 32; ++i){
+			memory[i] = 0;
+		}
 		SC_METHOD(read);
 		sensitive << instruction_address;
 	}

@@ -16,6 +16,9 @@ SC_MODULE(alucontrol) {
 	void decode_op() {
         function_code = extendedSignal.read().range(5, 0); // TODO: Estranho isso ae
         sc_uint<4> result_op = 0;
+        std::cout << "function_code: " << function_code << std::endl;
+        std::cout << "ALUOp[0]: " << ALUOp[0].read() << std::endl;
+        std::cout << "ALUOp[1]: " << ALUOp[1].read() << std::endl;
         if(ALUOp[0].read() == 0 && ALUOp[1].read() == 0){ // Add
             result_op = 5;
         }
@@ -24,7 +27,7 @@ SC_MODULE(alucontrol) {
         }
         else{
 
-            if(function_code == 0b100000){ // Add
+            if(function_code == 0b000000){ // Add
                 result_op = 5;
             }else if(function_code == 0b100010){ // Subtract
                 result_op = 6;
