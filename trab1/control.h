@@ -27,7 +27,7 @@
 /// opcode = 0b000111 (bne)
 ///
 /// J-type:
-/// opcode = 0b000010 (j)
+/// opcode = 0b111111 (j)
 ///
 /// No op:
 /// opcode = 0b000000 (nop)
@@ -138,7 +138,7 @@ SC_MODULE(control) {
                 AluOp[0] = 0;
                 AluOp[1] = 1;
                 break;
-            case 0b000010: // j
+            case 0b111111: // j
                 RegDst = 0;
                 AluSrc = 0;
                 Branch[0] = 1;
