@@ -17,35 +17,36 @@ SC_MODULE(ula) {
 		switch (op.read()) {
             case 0:
                 res = A_val && B_val;
-                std::cout << "case 0" << std::endl;
+                // std::cout << "case 0" << std::endl;
                 break;
             case 1:
                 res = A_val || B_val;
-                std::cout << "case 1" << std::endl;
+                // std::cout << "case 1" << std::endl;
                 break;
             case 2:
                 res = A_val ^ B_val;
-                std::cout << "case 2" << std::endl;
+                // std::cout << "case 2" << std::endl;
                 break;
             case 3:
                 res = ~A_val;
-                std::cout << "case 3" << std::endl;
+                // std::cout << "case 3" << std::endl;
                 break;
             case 4:
                 res = A_val < B_val;
-                std::cout << "case 4" << std::endl;
+                // std::cout << "case 4" << std::endl;
                 break;
             case 5:
                 res = A_val + B_val;
-                std::cout << "case 5" << std::endl;
+                std::cout << "Na ula, resultado da soma de A_val: " << A_val << " + B_val: " << B_val << " = res: " << res << std::endl;
+                // std::cout << "case 5" << std::endl;
                 break;
             case 6:
                 res = A_val - B_val;
-                std::cout << "case 6" << std::endl;
+                // std::cout << "case 6" << std::endl;
                 break;
             default:
                 res = 32;
-                std::cout << "default" << std::endl;
+                std::cout << "default????" << std::endl;
                 break;
         }
 

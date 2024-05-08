@@ -15,6 +15,7 @@ SC_MODULE(imem) {
 		for(int i=0; i < 32; ++i){
 			memory[i] = 0;
 		}
+		memory[0] = 0b00001000000001010000000001000000; // 000010 (addi) 00000 ($zero)  00101 ($reg5)  64 (0000000001000000)
 		SC_METHOD(read);
 		sensitive << instruction_address;
 	}

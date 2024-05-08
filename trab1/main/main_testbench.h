@@ -15,6 +15,16 @@ SC_MODULE(main_testbench){
 
         wait();
 
+        wait(); 
+
+        wait(); 
+
+        wait();
+        
+        wait(); 
+
+        wait();
+
         sc_stop();
     }
 

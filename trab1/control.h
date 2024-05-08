@@ -75,7 +75,7 @@ SC_MODULE(control) {
                 break;
             case 0b000010: // addi
                 RegDst = 0;
-                AluSrc = 0;
+                AluSrc = 1;
                 Branch[0] = 0;
                 Branch[1] = 0;
                 MemRd = 0;

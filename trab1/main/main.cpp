@@ -261,8 +261,8 @@ int sc_main(int argc, char* argv[]) {
     alu_src_mux.out(AluSrcMuxOutSig);
 
     mux32 mem_to_reg_mux("mem_to_reg_mux");
-    mem_to_reg_mux.in1(Buffer4DataSig);
-    mem_to_reg_mux.in2(Buffer4UlaResultSig);
+    mem_to_reg_mux.in1(Buffer4UlaResultSig);
+    mem_to_reg_mux.in2(Buffer4DataSig);
     mem_to_reg_mux.choose(Buffer4WBSig[1]);
     mem_to_reg_mux.out(MemToRegMuxOutSig);
 

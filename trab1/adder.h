@@ -10,7 +10,7 @@ SC_MODULE(adder5) {
 		in1_val = in1.read();
 		in2_val = in2.read();
 		res = in1_val + in2_val;
-		std::cout << "No adder5: " << in1_val << " + " << in2_val << " = " << res << std::endl;
+		// std::cout << "No adder5: " << in1_val << " + " << in2_val << " = " << res << std::endl;
         out.write(res);
     }
 
