@@ -38,7 +38,7 @@
 
 
 SC_MODULE(control) {
-    sc_in<bool> clk;
+    // sc_in<bool> clk;
 
     sc_in<sc_uint<6>> opcode;
     sc_out<bool> RegDst, AluSrc, Branch[2], MemRd, MemWrt, RegWrt, MemToReg;
@@ -159,6 +159,7 @@ SC_MODULE(control) {
 
     SC_CTOR(control) {
         SC_METHOD(do_control);
-        sensitive << clk.pos(); // TODO: Sensitive a opcode tambem?
+        // sensitive << clk.pos(); // TODO: Sensitive a opcode tambem?
+        sensitive << opcode;
     }
 };

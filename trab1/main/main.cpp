@@ -156,7 +156,7 @@ int sc_main(int argc, char* argv[]) {
     control.MemToReg(ControlMemToRegSig);
     control.AluOp[0](ControlAluOpSig[0]);
     control.AluOp[1](ControlAluOpSig[1]);
-    control.clk(TestClk);
+    // control.clk(TestClk);
 
     buffer_1 buffer1("buffer1");
     // buffer1.next_instruction_adress_in(PcAdderOutSig);

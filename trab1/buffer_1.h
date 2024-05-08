@@ -25,7 +25,7 @@ SC_MODULE(buffer_1) {
     sc_bv<16> rdShamtFunct;
 
     void write(){
-        if(clk.read() == 1){
+        if(clk.read() == 0){
             // next_instruction_adress = next_instruction_adress_in.read();
 		    // instruction_data = instruction_data_in.read();
             opcode = instruction_data_in.read().range(31, 26);
@@ -37,7 +37,7 @@ SC_MODULE(buffer_1) {
     }
 
     void read(){
-        if(clk.read() == 0){
+        if(clk.read() == 1){
             // next_instruction_adress_out = next_instruction_adress;
             // instruction_data_out = instruction_data;
             opcode_out = opcode;
@@ -50,9 +50,9 @@ SC_MODULE(buffer_1) {
 
 	SC_CTOR(buffer_1){
 		SC_METHOD(write);
-		sensitive << clk.pos();
+		sensitive << clk.neg();
 
         SC_METHOD(read);
-        sensitive << clk.neg();
+        sensitive << clk.pos();
 	}
 };

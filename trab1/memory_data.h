@@ -34,9 +34,9 @@ SC_MODULE(dmem) {
 		int i;
 		for(i=0;i<32;i++)
 			memory[i]=37; // Inicializa a memória a normal normalmente é 37
-		SC_METHOD(read);
-			sensitive << address;
 		SC_METHOD(write);
-			sensitive << clk;
+			sensitive << clk.neg();
+		SC_METHOD(read);
+			sensitive << clk.pos();
 	}
 };

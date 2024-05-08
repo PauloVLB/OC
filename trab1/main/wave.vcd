@@ -1,0 +1,180 @@
+$date
+     May 08, 2024       09:38:20
+$end
+
+$version
+ SystemC 2.3.3-Accellera --- May  6 2024 14:04:38
+$end
+
+$timescale
+     1 ns
+$end
+
+$scope module SystemC $end
+$var wire    1  aaaaa  TestClk       $end
+$var wire    5  aaaab  PcAdressSig [4:0]  $end
+$var wire   32  aaaac  InstructionDataSig [31:0]  $end
+$var wire   32  aaaad  MemoryDataSig [31:0]  $end
+$var wire   32  aaaae  BankRegisterRsDataSig [31:0]  $end
+$var wire   32  aaaaf  BankRegisterRtDataSig [31:0]  $end
+$var wire    1  aaaag  UlaZeroSig       $end
+$var wire   32  aaaah  UlaResultSig [31:0]  $end
+$var wire    3  aaaai  AluControlOpSig [2:0]  $end
+$var wire    1  aaaaj  ControlRegDstSig       $end
+$var wire    1  aaaak  ControlAluSrcSig       $end
+$var wire    1  aaaal  ControlBranchSig_0       $end
+$var wire    1  aaaam  ControlBranchSig_1       $end
+$var wire    1  aaaan  ControlMemRdSig       $end
+$var wire    1  aaaao  ControlMemWrtSig       $end
+$var wire    1  aaaap  ControlRegWrtSig       $end
+$var wire    1  aaaaq  ControlMemToRegSig       $end
+$var wire    1  aaaar  ControlAluOpSig_0       $end
+$var wire    1  aaaas  ControlAluOpSig_1       $end
+$var wire    6  aaaat  Buffer1OpcodeSig [5:0]  $end
+$var wire    5  aaaau  Buffer1RsSig [4:0]  $end
+$var wire    5  aaaav  Buffer1RtSig [4:0]  $end
+$var wire    5  aaaaw  Buffer1RdSig [4:0]  $end
+$var wire   16  aaaax  Buffer1RdShamtFunctSig [15:0]  $end
+$var wire    1  aaaay  Buffer2WBSig_0       $end
+$var wire    1  aaaaz  Buffer2WBSig_1       $end
+$var wire    1  aaaba  Buffer2MSig_0       $end
+$var wire    1  aaabb  Buffer2MSig_1       $end
+$var wire    1  aaabc  Buffer2MSig_2       $end
+$var wire    1  aaabd  Buffer2MSig_3       $end
+$var wire    1  aaabe  Buffer2EXSig_0       $end
+$var wire    1  aaabf  Buffer2EXSig_1       $end
+$var wire    1  aaabg  Buffer2EXSig_2       $end
+$var wire    1  aaabh  Buffer2EXSig_3       $end
+$var wire   32  aaabi  Buffer2RsDataSig [31:0]  $end
+$var wire   32  aaabj  Buffer2RtDataSig [31:0]  $end
+$var wire   32  aaabk  Buffer2RdShamtFunctExtendedSig [31:0]  $end
+$var wire    5  aaabl  Buffer2RtSig [4:0]  $end
+$var wire    5  aaabm  Buffer2RdSig [4:0]  $end
+$var wire    1  aaabn  Buffer3WBSig_0       $end
+$var wire    1  aaabo  Buffer3WBSig_1       $end
+$var wire    1  aaabp  Buffer3MSig_0       $end
+$var wire    1  aaabq  Buffer3MSig_1       $end
+$var wire    1  aaabr  Buffer3MSig_2       $end
+$var wire    1  aaabs  Buffer3MSig_3       $end
+$var wire    5  aaabt  Buffer3BranchAdressSig [4:0]  $end
+$var wire    1  aaabu  Buffer3ZeroSig       $end
+$var wire   32  aaabv  Buffer3UlaResultSig [31:0]  $end
+$var wire   32  aaabw  Buffer3RtDataSig [31:0]  $end
+$var wire    5  aaabx  Buffer3RegDestSig [4:0]  $end
+$var wire    1  aaaby  Buffer4WBSig_0       $end
+$var wire    1  aaabz  Buffer4WBSig_1       $end
+$var wire   32  aaaca  Buffer4DataSig [31:0]  $end
+$var wire   32  aaacb  Buffer4UlaResultSig [31:0]  $end
+$var wire    5  aaacc  Buffer4RegDestSig [4:0]  $end
+$var wire    5  aaacd  PcAdderOutSig [4:0]  $end
+$var wire   32  aaace  SignalExtendOutSig [31:0]  $end
+$var wire    5  aaacf  PcMuxOutSig [4:0]  $end
+$var wire    5  aaacg  RegDstMuxOutSig [4:0]  $end
+$var wire   32  aaach  AluSrcMuxOutSig [31:0]  $end
+$var wire   32  aaaci  MemToRegMuxOutSig [31:0]  $end
+$var wire    1  aaacj  BranchComponentOutSig       $end
+$upscope $end
+$enddefinitions  $end
+
+$comment
+All initial values are dumped below at time 0 sec = 0 timescale units.
+$end
+
+$dumpvars
+1aaaaa
+b0 aaaab
+b0 aaaac
+b0 aaaad
+b0 aaaae
+b0 aaaaf
+1aaaag
+b0 aaaah
+b101 aaaai
+0aaaaj
+1aaaak
+0aaaal
+0aaaam
+0aaaan
+0aaaao
+0aaaap
+0aaaaq
+0aaaar
+0aaaas
+b0 aaaat
+b0 aaaau
+b0 aaaav
+b0 aaaaw
+b0 aaaax
+0aaaay
+0aaaaz
+0aaaba
+0aaabb
+0aaabc
+0aaabd
+0aaabe
+0aaabf
+0aaabg
+0aaabh
+b0 aaabi
+b0 aaabj
+b0 aaabk
+b0 aaabl
+b0 aaabm
+0aaabn
+0aaabo
+0aaabp
+0aaabq
+0aaabr
+0aaabs
+b0 aaabt
+0aaabu
+b0 aaabv
+b0 aaabw
+b0 aaabx
+0aaaby
+0aaabz
+b0 aaaca
+b0 aaacb
+b0 aaacc
+b1 aaacd
+b0 aaace
+b1 aaacf
+b0 aaacg
+b0 aaach
+b0 aaaci
+0aaacj
+$end
+
+#5
+0aaaaa
+
+#10
+1aaaaa
+b1 aaaab
+1aaabh
+1aaabu
+b10 aaacd
+b10 aaacf
+
+#15
+0aaaaa
+
+#20
+1aaaaa
+b10 aaaab
+b11 aaacd
+b11 aaacf
+
+#25
+0aaaaa
+
+#30
+1aaaaa
+b11 aaaab
+b100 aaacd
+b100 aaacf
+
+#35
+0aaaaa
+
+#40
