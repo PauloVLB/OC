@@ -1,0 +1,10 @@
+Algoritmo 3 -- Soma de 1 a 10
+addi $reg1, $zero, 0
+addi $reg2, $zero, 10
+addi $reg3, $zero, 0
+ENQUANTO:
+	addi $reg1, $reg1, 1
+	add $reg3, $reg3, $reg1
+	beq $reg1, $reg2, FIM
+	j ENQUANTO
+FIM:
