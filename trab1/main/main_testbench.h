@@ -7,7 +7,7 @@ SC_MODULE(main_testbench){
     void TbGen() {
         
         std::cout << "Testbench started" << std::endl;
-        for(int i=0; i < 160; ++i){
+        for(int i=0; i < 193; ++i){
             std::cout << "Clock: " << i << std::endl;
             wait();
         }
