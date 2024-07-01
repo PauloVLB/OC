@@ -41,19 +41,25 @@ int main() {
     vector<pacote> pacotes_ativos;
     int id_atual = 0;
     for(int t = 0; t < MAX_TEMPO; t++) {
+
+        cout << "Tempo " << t << ":\n";
         
-
-        for(instancia inst : instancias) {
+        for(instancia &inst : instancias) {
             if(inst.tempo > t) break; // se ainda nao chegou sua hora
-            if(inst.tem_pacote()) continue; // se ja enviou todos os pacotes
-
+            if(!inst.tem_pacote()) continue; // se ja enviou todos os pacotes
             // TODO: checar se pode criar o pacote antes de criar
             pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t));
         }
 
-        for(pacote p : pacotes_ativos) {
-            if(p.chegou()) continue;
+        for(pacote &p : pacotes_ativos) {
+            cout << "Pacote " << p.id << ":\n";
+            if(p.chegou()) {
+                cout << "Já chegou\n";
+                continue;
+            }
+            cout << "Não chegou ainda, vou calcular caminho ou executar proxima instrução no caminho atual\n";
 
+            p.decida(red);
         }
     }
 

@@ -32,6 +32,11 @@ public:
     bool operator<(const coord& o) {
         return (x < o.x) || (x == o.x && y < o.y);
     }
+    
+    friend bool operator<(const coord& a, const coord& b) {
+        return (a.x < b.x) || (a.x == b.x && a.y < b.y);
+    }
 };
+
 
 #endif // COORD_H

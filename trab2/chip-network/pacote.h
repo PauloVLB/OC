@@ -1,6 +1,7 @@
 #ifndef PACOTE_H
 #define PACOTE_H
 
+#include <iostream>
 #include <stack>
 #include <map>
 #include <queue>
@@ -30,7 +31,7 @@ class pacote {
         pacote(coord o, coord d, int i, int inf, int t) : orig{o}, dest{d}, id{i}, info{inf}, tempo_init{t} {}
 
         bool chegou();
-        void bfs(const rede &r);
+        void bfs(rede &r);
         void decida(rede &r);
 };
 

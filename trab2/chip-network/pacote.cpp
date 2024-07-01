@@ -6,7 +6,7 @@ bool pacote::chegou() {
     return atual == dest;
 }
 
-void pacote::bfs(const rede &r) {
+void pacote::bfs(rede &r) {
     map<coord, bool> vis;
     map<coord, coord> antes;
     queue<coord> q;
@@ -26,7 +26,7 @@ void pacote::bfs(const rede &r) {
         for(coord dir : dirs) {
             coord proxima = f + dir;
         
-            if(r.pode_ir(proxima) && !vis[proxima]) {                    
+            if(r.pode_ir(f, proxima) && !vis[proxima]) {                    
                 q.push(proxima);
                 antes[proxima] = f;
                 vis[proxima] = true;
@@ -44,18 +44,33 @@ void pacote::bfs(const rede &r) {
 }
 
 void pacote::decida(rede &r) {
+    if(caminho.empty()) {
+        // TODO: ver se tem q esperar
+        // limpa o caminho atual e faz bfs dnv
+        cout << "Calculando rota..\n";
+        bfs(r);
+
+        stack<coord> caminho_aux = caminho;
+        while(!caminho_aux.empty()) {
+            // mostre a direção que vai tomar
+            coord proxima_dir = caminho_aux.top(); caminho_aux.pop();
+            cout << proxima_dir.x << " " << proxima_dir.y << endl;
+        }
+    } 
+    
     coord proxima_dir = caminho.top();
     coord proxima_coord = atual + proxima_dir;
+    
+    cout << "Executando proxima instrução: ";
+    cout << proxima_dir.x << " " << proxima_dir.y << endl;
 
-    if(r.pode_ir(proxima_coord)) {
+    if(r.pode_ir(atual, proxima_coord)) {
         caminho.pop();
         r.atualiza(id, atual, proxima_coord);
         atual = proxima_coord;
         qnt_saltos++;
     } else {
-        // TODO: ver se tem q esperar
-        // limpa o caminho atual e faz bfs dnv
-        while(!caminho.empty()) caminho.pop();
-        bfs(r);
+        cout << "o mano nao podia ir" << endl;
     }
+    
 }
