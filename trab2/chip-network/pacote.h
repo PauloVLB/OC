@@ -27,8 +27,8 @@ class pacote {
         stack<coord> caminho;        
     
         pacote() {}
-        pacote(coord o, coord d, int i, int inf) : orig{o}, dest{d}, id{i}, info{inf} {}
-        pacote(coord o, coord d, int i, int inf, int t) : orig{o}, dest{d}, id{i}, info{inf}, tempo_init{t} {}
+        pacote(coord o, coord d, int i, int inf) : orig{o}, dest{d}, id{i}, info{inf}, atual{o} {}
+        pacote(coord o, coord d, int i, int inf, int t) : orig{o}, dest{d}, id{i}, info{inf}, tempo_init{t}, atual{o} {}
 
         bool chegou();
         void bfs(rede &r);

@@ -13,7 +13,7 @@ public:
     instancia(int t, coord o, coord d, const vector<int>& p) : tempo{t}, orig{o}, dest{d}, pacotes_info{p} {}
 
     pacote criar_pacote(int id, int tempo_saida) {
-        pacote novo_pacote = pacote(orig, dest, pacotes_info.back(), tempo_saida);
+        pacote novo_pacote = pacote(orig, dest, id, pacotes_info.back(), tempo_saida);
         pacotes_info.pop_back();
 
         return novo_pacote;

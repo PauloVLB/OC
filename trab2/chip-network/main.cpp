@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define MAX_TEMPO 100
+#define MAX_TEMPO 10
 
 
 int main() {
