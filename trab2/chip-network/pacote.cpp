@@ -43,6 +43,72 @@ void pacote::bfs(rede &r) {
     }
 }
 
+
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+//  _ _ _ _ _ _       _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _     _ _ _ _ _ _ 
+// |           |     |           |   |           |   |           |   |           |   |           |   |           |   |           |
+// F           |     F           |   F           |   F           |   F           |   F           |   F           |   F           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// X           |     X           |   X           |   X           |   X           |   X           |   X           |   X           |
+// 1           |     1           |   1           |   1           |   1           |   1           |   1           |   1           |
+// |_ _ _ _ _ _|     |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|   |_ _ _ _ _ _|
+
 void pacote::decida(rede &r) {
     if(caminho.empty()) {
         // TODO: ver se tem q esperar
@@ -58,19 +124,25 @@ void pacote::decida(rede &r) {
         }
     } 
     
-    coord proxima_dir = caminho.top();
-    coord proxima_coord = atual + proxima_dir;
-    
-    cout << "Executando proxima instrução: ";
-    cout << proxima_dir.x << " " << proxima_dir.y << endl;
+    if(caminho.empty()) {
+        //! Pode ser que o caminho esteja vazio aqui !//
+        // XY
+        // J . . . . H -> H . . .
+    }
+    else {
 
-    if(r.pode_ir(atual, proxima_coord)) {
-        caminho.pop();
-        r.atualiza(id, atual, proxima_coord);
-        atual = proxima_coord;
-        qnt_saltos++;
-    } else {
-        cout << "o mano nao podia ir" << endl;
+        coord proxima_dir = caminho.top();
+        coord proxima_coord = atual + proxima_dir;
+        
+        cout << "Executando proxima instrução: ";
+        cout << proxima_dir.x << " " << proxima_dir.y << endl;
+
+        if(r.pode_ir(atual, proxima_coord)) {
+            caminho.pop();
+            r.atualiza(*this, atual, proxima_coord);
+        } else {
+            cout << "o mano nao podia ir" << endl;
+        }
     }
     
 }

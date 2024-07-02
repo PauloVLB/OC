@@ -16,6 +16,7 @@ public:
     bool bloqueado = false;
 
     int direcao(coord atual, coord destino);
+    void desbloquear_saidas();
 };
 
 #endif

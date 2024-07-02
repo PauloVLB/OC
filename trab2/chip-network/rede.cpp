@@ -15,4 +15,39 @@ bool rede::pode_ir(coord atual, coord quero_ir) {
     return true;
 }
 
-void rede::atualiza(int id_pacote, coord atual, coord proxima) {}
+void rede::atualiza(pacote &pck, coord atual, coord proxima) {
+
+    // Achar e remover pacote do roteador atual
+    exclui_pacote(atual, pck.id);
+
+    // Adicionar pacote no roteador que ele quer ir
+    int direcao = r[atual.x][atual.y].direcao(atual, proxima);
+    r[proxima.x][proxima.y].entrada[(direcao + 2) % 4].push_back(pck);
+
+    // Atualizar a posição do pacote
+    pck.atual = proxima;
+    pck.qnt_saltos++;
+
+    // Bloquear a saída do roteador atual
+    r[atual.x][atual.y].saida[direcao] = true;
+
+}
+
+void rede::desbloquear_saidas_rede() {
+    for (vector<roteador> &vrot : r) {
+        for(roteador &rot : vrot) {
+            rot.desbloquear_saidas();
+        }
+    }
+}
+
+void rede::exclui_pacote(coord atual, int id) {
+    for(int i=0; i < 4; ++i) {
+        for(int j=0; j < r[atual.x][atual.y].entrada[i].size(); ++j) {
+            if(r[atual.x][atual.y].entrada[i][j].id == id) {
+                r[atual.x][atual.y].entrada[i].erase(r[atual.x][atual.y].entrada[i].begin() + j);
+                return;
+            }
+        }
+    }
+}

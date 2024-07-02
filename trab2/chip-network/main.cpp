@@ -11,6 +11,8 @@ using namespace std;
 
 int main() {
     int qnt_inst; cin >> qnt_inst;
+    int qnt_total_pacotes = 0;
+
 
     vector<instancia> instancias;
     while(qnt_inst--) {
@@ -19,6 +21,7 @@ int main() {
 
 
         int qnt_pacotes; cin >> qnt_pacotes;
+        qnt_total_pacotes += qnt_pacotes;
 
         vector<int> pacotes(qnt_pacotes);
         for(int &pac : pacotes) {
@@ -39,11 +42,13 @@ int main() {
     sort(instancias.begin(), instancias.end());
 
     vector<pacote> pacotes_ativos;
+    unordered_map<int, bool> pacotes_chegaram;
     int id_atual = 0;
     for(int t = 0; t < MAX_TEMPO; t++) {
 
         cout << "Tempo " << t << ":\n";
         
+        // Checar se há instancias para criar pacotes
         for(instancia &inst : instancias) {
             if(inst.tempo > t) break; // se ainda nao chegou sua hora
             if(!inst.tem_pacote()) continue; // se ja enviou todos os pacotes
@@ -51,15 +56,29 @@ int main() {
             pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t));
         }
 
+        // Realizar "movimentos" dos pacotes
         for(pacote &p : pacotes_ativos) {
-            cout << "Pacote " << p.id << ":\n";
+            cout << "Pacote " << p.id << " (";
+            cout << p.atual.x << " " << p.atual.y << "):\n";
+
             if(p.chegou()) {
                 cout << "Já chegou\n";
+                if(pacotes_chegaram.count(p.id)) continue;
+                pacotes_chegaram[p.id] = true;
+                red.exclui_pacote(p.atual, p.id);
                 continue;
             }
             cout << "Não chegou ainda, vou calcular caminho ou executar proxima instrução no caminho atual\n";
 
             p.decida(red);
+        }
+
+        red.desbloquear_saidas_rede();
+
+        // Checar se ainda há pacotes
+        if(pacotes_chegaram.size() == qnt_total_pacotes) {
+            cout << "Nada mais a fazer\n";
+            break;
         }
     }
 

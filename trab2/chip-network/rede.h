@@ -4,8 +4,10 @@
 #include <vector>
 #include "roteador.h"
 #include "coord.h"
+#include "pacote.h"
 
 class roteador;
+class pacote;
 
 using namespace std;
 
@@ -18,7 +20,9 @@ public:
     }
 
     bool pode_ir(coord, coord);
-    void atualiza(int id_pacote, coord atual, coord proxima);
+    void atualiza(pacote &pck, coord atual, coord proxima);
+    void desbloquear_saidas_rede();
+    void exclui_pacote(coord atual, int id);
 };
 
 #endif 

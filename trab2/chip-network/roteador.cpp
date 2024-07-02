@@ -9,3 +9,9 @@ int roteador::direcao(coord atual, coord destino) {
     if(dif.x > 0) return 1; // baixo
     return 3; // cima
 }
+
+void roteador::desbloquear_saidas() {
+    for(int i=0; i < 4; ++i) {
+        saida[i] = false;
+    }
+}
