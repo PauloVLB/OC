@@ -52,9 +52,28 @@ int main() {
         for(instancia &inst : instancias) {
             if(inst.tempo > t) break; // se ainda nao chegou sua hora
             if(!inst.tem_pacote()) continue; // se ja enviou todos os pacotes
-            // TODO: checar se pode criar o pacote antes de criar
-            pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t));
+            // Checar se existe posição no roteador de origem para alocar um novo pacote
+            bool tem_espaco = false;
+            int espaco = -1;
+            for(int i=3; i >= 0; --i) {
+                if(red.r[inst.orig.x][inst.orig.y].entrada[i].size() < 4) {
+                    tem_espaco = true;
+                    espaco = i;
+                    break;
+                }
+            }
+            if(!tem_espaco) continue;
+            pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t, red, espaco));
+
         }
+        // if(t == 0){
+        //     // Vou printar o roteador 2 2
+        //     cout << red.r[2][2];
+        // }
+        // if(t == 1){
+        //     // Vou printar o roteador 2 2
+        //     cout << red.r[2][2];
+        // }
 
         // Realizar "movimentos" dos pacotes
         for(pacote &p : pacotes_ativos) {

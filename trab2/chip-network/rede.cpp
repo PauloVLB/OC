@@ -51,3 +51,7 @@ void rede::exclui_pacote(coord atual, int id) {
         }
     }
 }
+
+void rede::aloca_pacote(pacote &pck, coord atual, int espaco) {
+    r[atual.x][atual.y].entrada[espaco].push_back(pck);
+}

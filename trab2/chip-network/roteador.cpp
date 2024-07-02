@@ -15,3 +15,42 @@ void roteador::desbloquear_saidas() {
         saida[i] = false;
     }
 }
+
+void print_number_with_two_digits(ostream &os, int n) {
+    if(n < 10) os << "0";
+    os << n;
+}
+
+void print_upper_line(ostream &os, const vector<pacote>& pkg, bool saida) {
+    os << " _ ";
+    int size = pkg.size();
+    for(int i=0; i < size; ++i) {
+        print_number_with_two_digits(os, pkg[i].id);
+        os << " _ ";
+    }
+    for(int i=size; i < 4; ++i) {
+        os << "XX _";
+        if(i != 3){
+            os << " ";
+        }
+    }
+    if(saida) os << "V_ \n";
+    else os << "F_ \n";
+}
+
+void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida) {
+    os << "|_ ";
+    int size = pkg.size();
+    for(int i=0; i < size; ++i) {
+        print_number_with_two_digits(os, pkg[i].id);
+        os << " _ ";
+    }
+    for(int i=size; i < 4; ++i) {
+        os << "XX _";
+        if(i != 3){
+            os << " ";
+        }
+    }
+    if(saida) os << "V_|\n";
+    else os << "F_|\n";
+}

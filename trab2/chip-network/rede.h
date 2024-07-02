@@ -23,6 +23,7 @@ public:
     void atualiza(pacote &pck, coord atual, coord proxima);
     void desbloquear_saidas_rede();
     void exclui_pacote(coord atual, int id);
+    void aloca_pacote(pacote &pck, coord atual, int espaco);
 };
 
 #endif 
