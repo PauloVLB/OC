@@ -22,14 +22,14 @@ void print_number_with_two_digits(ostream &os, int n) {
 }
 
 void print_full_block(ostream &os) {
-    for(int i=0; i < 25; ++i) {
+    for(int i=0; i < 23; ++i) {
         os << "X";
     }
 }
 
 void print_side_block(ostream &os) {
     os << "XX";
-    for(int i=0; i < 21; ++i) {
+    for(int i=0; i < 19; ++i) {
         os << " ";
     }
     os << "XX";
@@ -52,8 +52,7 @@ void print_upper_line(ostream &os, const vector<pacote>& pkg, bool saida, bool b
             os << " ";
         }
     }
-    if(saida) os << "V_ ";
-    else os << "F_ ";
+    os << " ";
 }
 
 void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida, bool bloqueado) {
@@ -73,8 +72,7 @@ void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida, bool b
             os << " ";
         }
     }
-    if(saida) os << "V_|";
-    else os << "F_|";
+    os << "|";
 }
 
 void print_middle_lines(ostream &os, const vector<pacote>& pkg1, const vector<pacote>& pkg2, int pos, bool bloqueado) {
@@ -84,19 +82,7 @@ void print_middle_lines(ostream &os, const vector<pacote>& pkg1, const vector<pa
     }
     if(pos < pkg1.size()) print_number_with_two_digits(os, pkg1[pos].id);
     else os << "..";
-    os << "                     ";
+    os << "                   ";
     if(pos < pkg2.size()) print_number_with_two_digits(os, pkg2[pos].id);
     else os << "..";
-}
-
-void print_out_line(ostream &os, bool saida1, bool saida2, bool bloqueado) {
-    if(bloqueado) {
-        print_side_block(os);
-        return;
-    }
-    if(saida1) os << "V";
-    else os << "F";
-    os << "                       ";
-    if(saida2) os << "V";
-    else os << "F";
 }

@@ -47,7 +47,6 @@ int main() {
     for(int t = 0; t < MAX_TEMPO; t++) {
 
         cout << "Tempo " << t << ":\n";
-        
         // Checar se há instancias para criar pacotes
         for(instancia &inst : instancias) {
             if(inst.tempo > t) break; // se ainda nao chegou sua hora
@@ -66,14 +65,8 @@ int main() {
             pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t, red, espaco));
 
         }
-        if(t == 0){
-            // Vou printar o roteador 2 2
-            cout << red << '\n';
-        }
-        // if(t == 1){
-        //     // Vou printar o roteador 2 2
-        //     cout << red.r[2][2];
-        // }
+        
+        cout << red << '\n';
 
         // Realizar "movimentos" dos pacotes
         for(pacote &p : pacotes_ativos) {

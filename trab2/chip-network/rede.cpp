@@ -59,7 +59,7 @@ void rede::aloca_pacote(pacote &pck, coord atual, int espaco) {
 ostream& operator<<(ostream &os, const rede &red) {
     os << "   ";
     for(int i = 0; i < 8; i++) {
-        os << "            " << i << "                 ";
+        os << "           " << i << "                ";
     }
     os << '\n';
 
@@ -77,11 +77,11 @@ ostream& operator<<(ostream &os, const rede &red) {
                 os << "     ";
                 continue;
             }
-            os << "|                       |     ";
+            os << "|                     |     ";
         }
         os << "\n";
         for(int k = 0; k < 4; k++) {
-            if(k == 2) os << i << "  ";
+            if(k == 1) os << i << "  ";
             else os << "   ";
             for(int j = 0; j < 8; j++) {
                 print_middle_lines(os, red.r[i][j].entrada[2], red.r[i][j].entrada[0], k, red.r[i][j].bloqueado);
@@ -90,13 +90,6 @@ ostream& operator<<(ostream &os, const rede &red) {
             os << '\n';
         }
         os << "   ";
-        for(int j = 0; j < 8; j++) {
-            print_out_line(os, red.r[i][j].saida[2], red.r[i][j].saida[0], red.r[i][j].bloqueado);
-            os << "     ";
-        }
-        os << '\n';
-        os << "   ";
-
         for(int j = 0; j < 8; j++) {
             print_lower_line(os, red.r[i][j].entrada[1], red.r[i][j].saida[1], red.r[i][j].bloqueado);
             os << "     ";

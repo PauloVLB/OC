@@ -39,8 +39,6 @@ void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida, bool b
 
 void print_middle_lines(ostream &os, const vector<pacote>& pkg1, const vector<pacote>& pkg2, int pos, bool bloqueado);
 
-void print_out_line(ostream &os, bool saida1, bool saida2, bool bloqueado);
-
 void print_full_block(ostream &os);
 
 void print_side_block(ostream &os);
@@ -60,19 +58,8 @@ public:
     // XX                     XX
     // XX                     XX
     // XX                     XX
-    // F                       F
     // |_ 05 _ 06 _ XX _ XX _V_|
     friend ostream& operator<<(ostream &os, const roteador &r) {
-        // os << " _ XX _ XX _ XX _ XX _F_ \n";
-        // for(int i=0; i < 4; ++i) {
-        //     os << "|                       |\n";
-        //     for(int j=0; j < 2; ++j) {
-        //         os << "XX                     XX\n";
-        //     }
-        //     os << "0" << i << "                     XX\n";
-        //     os << "F                       F\n";
-        //     os << "|_ 0" << i+4 << " _ 0" << i+5 << " _ XX _ XX _V_|";
-        // }
         print_upper_line(os, r.entrada[3], r.saida[3], r.bloqueado);
         os << "\n|                       |\n";
         print_middle_lines(os, r.entrada[2], r.entrada[0], 0, r.bloqueado);
@@ -82,8 +69,6 @@ public:
         print_middle_lines(os, r.entrada[2], r.entrada[0], 2, r.bloqueado);
         os << '\n';
         print_middle_lines(os, r.entrada[2], r.entrada[0], 3, r.bloqueado);
-        os << '\n';
-        print_out_line(os, r.saida[2], r.saida[0], r.bloqueado);
         os << '\n';
         print_lower_line(os, r.entrada[1], r.saida[1], r.bloqueado);
         os << '\n';
