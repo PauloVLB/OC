@@ -15,15 +15,17 @@ class rede;
 class pacote {
     private: 
         vector<coord> dirs = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        map<coord, char> dir_str = {{dirs[0], 'B'}, {dirs[1], 'D'}, {dirs[2], 'C'}, {dirs[3], 'E'}};
     public:
         coord orig, dest, atual;
         
         int id;
         int tempo_init = 0;
-        int tempo_atual = 0;
+        int tempo_final;
         int qnt_saltos = 0;
         int info;
-
+        
+        string caminho_final;
         stack<coord> caminho;        
     
         pacote() {}

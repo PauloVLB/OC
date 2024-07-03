@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define MAX_TEMPO 10
+#define MAX_TEMPO 25
 
 
 int main() {
@@ -65,7 +65,7 @@ int main() {
             pacotes_ativos.push_back(inst.criar_pacote(id_atual++, t, red, espaco));
 
         }
-        
+
         cout << red << '\n';
 
         // Realizar "movimentos" dos pacotes
@@ -76,6 +76,7 @@ int main() {
             if(p.chegou()) {
                 cout << "Já chegou\n";
                 if(pacotes_chegaram.count(p.id)) continue;
+                p.tempo_final = t - p.tempo_init;
                 pacotes_chegaram[p.id] = true;
                 red.exclui_pacote(p.atual, p.id);
                 continue;
@@ -93,6 +94,21 @@ int main() {
             break;
         }
     }
+
+
+    cout << "\n\n\n---> INFO <---\n";
+    for(pacote &p : pacotes_ativos) {
+        if(!pacotes_chegaram.count(p.id)) {
+            cout << "Pacote " << p.id << " não chegou\n";            
+        } else {
+            cout << "Pacote " << p.id << ". (" << p.orig.x << " " << p.orig.y << ") -> (" << p.dest.x << " " << p.dest.y << ") chegou.\n";
+            cout << "Informação: " << p.info << '\n';
+            cout << "Tempo de chegada: " << p.tempo_final << '\n';
+            cout << "Quantidade de saltos: " << p.qnt_saltos << '\n';
+            cout << "Caminho: " << p.caminho_final << "\n\n";
+        }
+    }
+
 
 
 }

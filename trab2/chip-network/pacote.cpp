@@ -80,7 +80,6 @@ void pacote::decida(rede &r) {
 
         cout << "Possibilidades: \n";
         for(coord dir : possibilidades) {
-            
             cout << dir.x << " " << dir.y << endl;
 
             coord proxima_coord = atual + dir;
@@ -98,6 +97,7 @@ void pacote::decida(rede &r) {
 
         cout << proxima_dir.x << " " << proxima_dir.y << endl;
         r.atualiza(*this, atual, atual + proxima_dir);
+        caminho_final += dir_str[proxima_dir];
     }
     else {
 
@@ -110,8 +110,9 @@ void pacote::decida(rede &r) {
         if(r.pode_ir(atual, proxima_coord)) {
             caminho.pop();
             r.atualiza(*this, atual, proxima_coord);
+            caminho_final += dir_str[proxima_dir];
         } else {
-            cout << "o mano nao podia ir" << endl;
+            cout << "Não pode ir" << endl;
         }
     }
     
