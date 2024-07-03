@@ -24,6 +24,8 @@ public:
     void desbloquear_saidas_rede();
     void exclui_pacote(coord atual, int id);
     void aloca_pacote(pacote &pck, coord atual, int espaco);
+    
+    friend ostream& operator<<(ostream &os, const rede &red);
 };
 
 #endif 

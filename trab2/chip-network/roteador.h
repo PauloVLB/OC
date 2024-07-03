@@ -33,9 +33,17 @@ class pacote;
 
 void print_number_with_two_digits(ostream &os, int n);
 
-void print_upper_line(ostream &os, const vector<pacote>& pkg, bool saida);
+void print_upper_line(ostream &os, const vector<pacote>& pkg, bool saida, bool bloqueado);
 
-void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida);
+void print_lower_line(ostream &os, const vector<pacote>& pkg, bool saida, bool bloqueado);
+
+void print_middle_lines(ostream &os, const vector<pacote>& pkg1, const vector<pacote>& pkg2, int pos, bool bloqueado);
+
+void print_out_line(ostream &os, bool saida1, bool saida2, bool bloqueado);
+
+void print_full_block(ostream &os);
+
+void print_side_block(ostream &os);
 
 class roteador {
 public:
@@ -65,8 +73,20 @@ public:
         //     os << "F                       F\n";
         //     os << "|_ 0" << i+4 << " _ 0" << i+5 << " _ XX _ XX _V_|";
         // }
-        print_upper_line(os, r.entrada[3], r.saida[3]);
-        print_lower_line(os, r.entrada[1], r.saida[1]);
+        print_upper_line(os, r.entrada[3], r.saida[3], r.bloqueado);
+        os << "\n|                       |\n";
+        print_middle_lines(os, r.entrada[2], r.entrada[0], 0, r.bloqueado);
+        os << '\n';
+        print_middle_lines(os, r.entrada[2], r.entrada[0], 1, r.bloqueado);
+        os << '\n';
+        print_middle_lines(os, r.entrada[2], r.entrada[0], 2, r.bloqueado);
+        os << '\n';
+        print_middle_lines(os, r.entrada[2], r.entrada[0], 3, r.bloqueado);
+        os << '\n';
+        print_out_line(os, r.saida[2], r.saida[0], r.bloqueado);
+        os << '\n';
+        print_lower_line(os, r.entrada[1], r.saida[1], r.bloqueado);
+        os << '\n';
         return os;
     }
 };
